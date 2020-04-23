@@ -18,7 +18,7 @@ namespace Controllers.Transaction.Payment
 {
     public partial class PaymentInController : BaseController
     {
-
+        //TEST lagi Roni
         string VIEW_DETAIL = "PaymentIn";
         string VIEW_FORM_PARTIAL = "Partial/PaymentIn_Form_Partial";
         string VIEW_LIST_PARTIAL = "Partial/PaymentIn_List_Partial";
