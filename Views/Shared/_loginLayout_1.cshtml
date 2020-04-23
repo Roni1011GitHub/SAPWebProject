@@ -1,0 +1,52 @@
+﻿@using System.Data;
+
+@{ 
+    Layout = "~/Views/Shared/_loginLayout_0.cshtml"; 
+} 
+ 
+
+@Html.DevExpress().Splitter(settings =>
+{
+    settings.Name = "ContentSplitter_Login";
+    settings.Orientation = System.Web.UI.WebControls.Orientation.Vertical;
+    settings.Styles.Pane.Paddings.Padding = System.Web.UI.WebControls.Unit.Pixel(20);
+    settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+    
+    //settings.ClientSideEvents.PaneResized = "OutlookController.ContentSplitterPaneResized";
+    
+    settings.Styles.Pane.Border.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0); 
+    settings.Panes.Add(subpane =>
+    {
+        subpane.Name = "MessageBody_Login";
+        // subpane.PaneStyle.CssClass = "mlist";
+        subpane.SetContent(RenderBody().ToHtmlString());
+        subpane.ScrollBars = System.Web.UI.WebControls.ScrollBars.Auto;
+        //subpane.PaneStyle.BackgroundImage.ImageUrl = "~/Content/Images/BgLogin/Travel-Managament-System_BG.png"; 
+        subpane.PaneStyle.BackgroundImage.ImageUrl = "~/Content/Images/BgLogin/home-bg.jpg"; 
+        subpane.PaneStyle.CssClass = "loginPane";
+        
+    });
+
+    settings.Panes.Add(subpane =>
+    {
+        subpane.Name = "MessageFooter_Login";
+        subpane.PaneStyle.CssClass = "MessageFooterPane";
+        subpane.ShowCollapseForwardButton = DefaultBoolean.True;
+        subpane.ShowCollapseBackwardButton = DefaultBoolean.True;
+        subpane.ScrollBars = System.Web.UI.WebControls.ScrollBars.Auto;
+        subpane.Collapsed = false;
+
+
+        subpane.Size = System.Web.UI.WebControls.Unit.Pixel(40);
+        subpane.SetContent("<div id=\"MessageText\" class=\"message\"></div>");
+        subpane.Visible = false;
+    });
+
+
+    settings.SaveStateToCookies = true;
+
+}).GetHtml()
+
+
+

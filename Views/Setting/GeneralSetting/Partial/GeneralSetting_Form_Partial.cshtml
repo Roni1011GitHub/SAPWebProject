@@ -1,0 +1,136 @@
+﻿ 
+@using Models.Setting.GeneralSetting
+
+@model Models.Setting.GeneralSetting.GeneralSettingModel
+
+@{
+    ViewBag.Id=Model.Id;
+ 
+}
+
+
+
+@Html.DevExpress().TextBox(
+        settings =>
+        {
+            settings.Name = "Id";
+            settings.ControlStyle.CssClass = "editor";
+            settings.ShowModelErrors = true;
+            settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            settings.ClientVisible = false;
+        }
+).Bind(Model.Id).GetHtml()
+
+
+
+@Html.DevExpress().FormLayout(settings =>
+{
+    settings.Name = "formLayout";
+    settings.EncodeHtml = false;
+    settings.Width = Unit.Percentage(100);
+    settings.AlignItemCaptionsInAllGroups = true;
+    settings.ShowItemCaptionColon = false;
+
+    var groupItem = settings.Items.AddGroupItem(itemSettings =>
+    {
+        itemSettings.Caption = "General Setting";
+        //itemSettings.Caption = "Series Reservation";
+        itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
+        itemSettings.GroupBoxDecoration = GroupBoxDecoration.HeadingLine;
+        itemSettings.ColCount = 1;
+ 
+        itemSettings.GroupBoxStyle.Caption.Paddings.Padding = 5;
+        itemSettings.GroupBoxStyle.Caption.Font.Size = 14;
+        itemSettings.GroupBoxStyle.Caption.ForeColor = System.Drawing.Color.Orange;
+        //itemSettings.GroupBoxStyle.Caption.ForeColor = System.Drawing.Color.FromName("#dccb3f");
+        //itemSettings.GroupBoxStyle.Caption.BackColor = System.Drawing.Color.FromName("#116959");
+
+    });
+
+    groupItem.Items.AddEmptyItem().Height = 25;
+    
+ 
+
+    groupItem.Items.AddTabbedGroupItem(group =>
+    {
+        group.Name = "TabDetail";
+        group.ColSpan =1;
+        group.Width = Unit.Percentage(100);
+        group.Height = Unit.Percentage(100);
+        group.PageControl.ContentStyle.Paddings.Padding = 3;
+        group.PageControl.ContentStyle.Paddings.PaddingTop = 0;        
+       
+        
+        group.Items.Add(item =>
+        {
+            item.Name = "TabGeneral";
+            item.Caption = "General ";
+            item.SetNestedContent(() =>
+            {
+                @Html.DevExpress().FormLayout(settingtab =>
+                {
+                    settingtab.Name = "formLayoutTabGeneral";
+                    settingtab.EncodeHtml = false;
+
+                    //settingtab.Width = Unit.Percentage(100);
+                    settingtab.AlignItemCaptionsInAllGroups = true;
+                    settingtab.ShowItemCaptionColon = false;
+
+                    var groupItemtab = settingtab.Items.AddGroupItem(itemSettings =>
+                    {
+                        itemSettings.Caption = "";
+                        itemSettings.ShowCaption = DefaultBoolean.False;
+                        itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
+                        itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
+                        itemSettings.ColCount = 1;
+                       
+
+                    });
+
+                    var groupItemTab_Col1 = groupItemtab.Items.AddGroupItem(itemSettings =>
+                    {
+
+                        itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Top;
+                        itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
+                        itemSettings.ShowCaption = DefaultBoolean.False;
+                        itemSettings.ColCount = 1;
+                        
+                    });
+
+
+                     
+
+                    groupItemTab_Col1.Items.Add(itemSettings =>
+                    {
+                        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.SpinEdit;
+                        itemSettings.Caption = "Change Password (Days)";
+                        itemSettings.FieldName = "ChangePassDays";
+                        var txt = (SpinEditSettings)itemSettings.NestedExtensionSettings;
+                        txt.Name = "ChangePassDays";
+                        txt.ShowModelErrors = true;
+                        txt.ControlStyle.CssClass = "editor";
+                        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.Lavender;
+                        txt.Properties.MinValue = 0;
+                        txt.Properties.MaxValue = 999;
+                        txt.Width = 100;
+                        txt.ControlStyle.HorizontalAlign = HorizontalAlign.Right;
+                        txt.Properties.AllowMouseWheel = false;
+
+                    });
+
+
+                    
+                    
+                    
+                }).GetHtml();
+             });
+        }); 
+ 
+
+    }); 
+
+}).GetHtml()
+
+
+

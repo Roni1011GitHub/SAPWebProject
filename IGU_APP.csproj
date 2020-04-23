@@ -1,0 +1,749 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{CAA6DB29-330F-4203-BA17-0ADB5624D351}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>IGU_APP</RootNamespace>
+    <AssemblyName>IGU_APP</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>4.0</OldToolsVersion>
+    <UseIISExpress>false</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UpgradeBackupLocation />
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <Use64BitIISExpress />
+    <UseGlobalApplicationHostFile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Windows\assembly\GAC_MSIL\CrystalDecisions.CrystalReports.Engine\13.0.3500.0__692fbea5521e1304\CrystalDecisions.CrystalReports.Engine.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Windows\assembly\GAC_MSIL\CrystalDecisions.ReportSource\13.0.3500.0__692fbea5521e1304\CrystalDecisions.ReportSource.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Windows\assembly\GAC_MSIL\CrystalDecisions.Shared\13.0.3500.0__692fbea5521e1304\CrystalDecisions.Shared.dll</HintPath>
+    </Reference>
+    <Reference Include="CrystalDecisions.Web, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Windows\assembly\GAC_MSIL\CrystalDecisions.Web\13.0.3500.0__692fbea5521e1304\CrystalDecisions.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="DevExpress.Charts.v14.1.Core, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Dashboard.v14.1.Core, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Dashboard.v14.1.Web, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Dashboard.v14.1.Web.Mvc5, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Data.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Office.v14.1.Core, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.PivotGrid.v14.1.Core, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Printing.v14.1.Core, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.RichEdit.v14.1.Core, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.SpellChecker.v14.1.Core, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Spreadsheet.v14.1.Core, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Utils.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Web.ASPxGauges.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Web.ASPxHtmlEditor.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Web.ASPxPivotGrid.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Web.ASPxScheduler.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Web.ASPxSpellChecker.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Web.ASPxSpreadsheet.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Web.ASPxThemes.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Web.ASPxTreeList.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Web.Mvc5.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Web.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.Xpo.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraCharts.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraCharts.v14.1.Web, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraGauges.v14.1.Core, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraGauges.v14.1.Presets, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraPivotGrid.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraReports.v14.1, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraReports.v14.1.Web, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DevExpress.XtraScheduler.v14.1.Core, Version=14.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.AspNet">
+      <HintPath>packages\DotNetOpenAuth.AspNet.4.1.4.12333\lib\net45-full\DotNetOpenAuth.AspNet.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.Core">
+      <HintPath>packages\DotNetOpenAuth.Core.4.1.4.12333\lib\net45-full\DotNetOpenAuth.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth">
+      <HintPath>packages\DotNetOpenAuth.OAuth.Core.4.1.4.12333\lib\net45-full\DotNetOpenAuth.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OAuth.Consumer">
+      <HintPath>packages\DotNetOpenAuth.OAuth.Consumer.4.1.4.12333\lib\net45-full\DotNetOpenAuth.OAuth.Consumer.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenId">
+      <HintPath>packages\DotNetOpenAuth.OpenId.Core.4.1.4.12333\lib\net45-full\DotNetOpenAuth.OpenId.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetOpenAuth.OpenId.RelyingParty">
+      <HintPath>packages\DotNetOpenAuth.OpenId.RelyingParty.4.1.4.12333\lib\net45-full\DotNetOpenAuth.OpenId.RelyingParty.dll</HintPath>
+    </Reference>
+    <Reference Include="Elmah, Version=1.2.14706.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="IGU_APP_DI">
+      <HintPath>..\IGU_APP_DI\bin\Debug\IGU_APP_DI.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.WebPages.OAuth, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.OAuth.3.0.0\lib\net45\Microsoft.Web.WebPages.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\Microsoft.AspNet.Mvc.5.2.0\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Theme02, Version=14.1.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Theme02.dll</HintPath>
+    </Reference>
+    <Reference Include="WebMatrix.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\Microsoft.AspNet.WebPages.Data.3.2.7\lib\net45\WebMatrix.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="WebMatrix.WebData, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\Microsoft.AspNet.WebPages.WebData.3.2.7\lib\net45\WebMatrix.WebData.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Readme\Elmah.txt" />
+    <Content Include="Content\Attachment\OtherPoDsa\63d72d58-e109-4ced-b0e9-f45340c17048_2016-02-12 12.18.17.jpg" />
+    <Content Include="Content\Images\BayuBuanalogo5.png" />
+    <Content Include="Content\Images\BayuBuanalogo7.png" />
+    <Content Include="Content\Images\bayubuana_logo.png" />
+    <Content Include="Content\Images\bblogo.png" />
+    <Content Include="Content\Images\BgLogin\bblogo.png" />
+    <Content Include="Content\Images\BgLogin\Travel-Managament-System_BG.png" />
+    <Content Include="Content\Images\button\b_add.png" />
+    <Content Include="Content\Images\button\b_copyto.png" />
+    <Content Include="Content\Images\button\b_createtourcode.png" />
+    <Content Include="Content\Images\button\b_delete.png" />
+    <Content Include="Content\Images\button\b_duplicate.png" />
+    <Content Include="Content\Images\button\b_excel.png" />
+    <Content Include="Content\Images\button\b_filter.png" />
+    <Content Include="Content\Images\button\b_find.png" />
+    <Content Include="Content\Images\button\b_menuother.png" />
+    <Content Include="Content\Images\button\b_navfirst.png" />
+    <Content Include="Content\Images\button\b_navlast.png" />
+    <Content Include="Content\Images\button\b_navnext.png" />
+    <Content Include="Content\Images\button\b_navprev.png" />
+    <Content Include="Content\Images\button\b_new.png" />
+    <Content Include="Content\Images\button\b_post.png" />
+    <Content Include="Content\Images\button\b_print.png" />
+    <Content Include="Content\Images\button\b_refresh.png" />
+    <Content Include="Content\Images\button\b_showdetail.png" />
+    <Content Include="Content\Images\button\b_update.png" />
+    <Content Include="Content\Images\button\b_updatestatus.png" />
+    <Content Include="Content\Images\button\b_clear.png" />
+    <Content Include="Content\Images\button\b_show.png" />
+    <Content Include="Content\Images\button\b_upload.png" />
+    <Content Include="Content\Images\button\menu_default.png" />
+    <Content Include="Content\Images\button\menu_selected.png" />
+    <Content Include="Content\Images\Travel-Managament-System_HD.png" />
+    <Content Include="Content\Images\Travel-Managament-System_Login.png" />
+    <Content Include="Content\Rpt.css" />
+    <Content Include="Content\jquery-ui.css" />
+    <Content Include="Content\jquery-ui.min.css" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Content\TemplateAndSampleUploadData\HotelVoucher_Itank.txt" />
+    <Content Include="Content\TemplateAndSampleUploadData\Ticket Billing BSP.txt" />
+    <Content Include="CREATE DB.SQL" />
+    <Content Include="Global.asax" />
+    <Content Include="Notes.txt" />
+    <Content Include="packages.config" />
+    <Content Include="Rpts\Rpt.aspx" />
+    <Content Include="Scripts\ASPxScriptIntelliSense.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\Idu.js" />
+    <Content Include="Scripts\Test\DXR.js" />
+    <Content Include="Views\_CrystalReport\Rpt.cshtml" />
+    <Content Include="Content\TemplateAndSampleUploadData\BCD Field Valid Value.csv" />
+    <Content Include="Content\TemplateAndSampleUploadData\Hotel Summary.csv" />
+    <Content Include="Content\TemplateAndSampleUploadData\Ticket Use Tour Selain Series.csv" />
+    <Content Include="Content\TemplateAndSampleUploadData\TourIncentiveReservationPax.csv" />
+    <Content Include="Content\TemplateAndSampleUploadData\uploadTourHotelList.csv" />
+    <Content Include="Content\TemplateAndSampleUploadData\uploadTourRoomList.csv" />
+    <Content Include="Content\TemplateAndSampleUploadData\Ticket Receipt.csv" />
+    <Content Include="Content\TemplateAndSampleUploadData\OtherBilling-DomTrainTicket.csv" />
+    <Content Include="Content\Attachment\Bpk\94ff58ba-8f58-4183-a4f0-0e6768305d90_Break down price BELITUNG 19-21 Feb 17 REV3 %28HARGA NET%29.pdf" />
+    <Content Include="Content\Attachment\Bpk\c623d733-67d6-4d70-9419-8c9428fd3377_EE1QR 11D EAST ERP SAVER PLUS QR APR MAY.pdf" />
+    <Content Include="Content\TemplateAndSampleUploadData\OtherBilling-Insurance.csv" />
+    <Content Include="Content\TemplateAndSampleUploadData\uploadTourParticipantList.csv" />
+    <Content Include="Content\TemplateAndSampleUploadData\HotelMatchingBilling.csv" />
+    <None Include="Scripts\jquery-2.2.0.intellisense.js" />
+    <Content Include="Scripts\globalize.cultures.js" />
+    <Content Include="Scripts\jquery-2.2.0.js" />
+    <Content Include="Scripts\jquery-2.2.0.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\jquery.validate.globalize.js" />
+    <Content Include="Scripts\jquery.validate.globalize.min.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\MicrosoftAjax.debug.js" />
+    <Content Include="Scripts\MicrosoftAjax.js" />
+    <Content Include="Scripts\MicrosoftMvcAjax.debug.js" />
+    <Content Include="Scripts\MicrosoftMvcAjax.js" />
+    <Content Include="Scripts\MicrosoftMvcValidation.debug.js" />
+    <Content Include="Scripts\MicrosoftMvcValidation.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Boolean.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Decimal.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\MultilineText.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Password.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\String.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\Shared\FooterPartialView.cshtml" />
+    <Content Include="Views\Shared\HeaderPartialView.cshtml" />
+    <Content Include="Views\Shared\LogOnPartialView.cshtml" />
+    <Content Include="Views\Shared\_lightLayout.cshtml" />
+    <Content Include="Views\Shared\_rootLayout.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\_mainLayout2_0.cshtml" />
+    <Content Include="Views\Shared\_mainLayout2_1.cshtml" />
+    <Content Include="Scripts\jquery-2.2.0.min.map" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Views\Shared\_rootRpt.cshtml" />
+    <Content Include="Views\Authentication\Role\Role.cshtml" />
+    <Content Include="Views\Authentication\Role\Partial\Role_Form_Partial.cshtml" />
+    <Content Include="Views\Authentication\Role\Partial\Role_List_Partial.cshtml" />
+    <Content Include="Views\Authentication\Role\Partial\Role_Panel_List_Partial.cshtml" />
+    <Content Include="Views\Authentication\Role\Partial\Role_TreeView_Partial.cshtml" />
+    <Content Include="Views\Authentication\User\User.cshtml" />
+    <Content Include="Views\Authentication\User\Partial\User_Form_Partial.cshtml" />
+    <Content Include="Views\Authentication\User\Partial\User_List_Partial.cshtml" />
+    <Content Include="Views\Authentication\User\Partial\User_Panel_List_Partial.cshtml" />
+    <Content Include="Views\Authentication\ChangePassword\Partial\ChangePassword_Form_Partial.cshtml" />
+    <Content Include="Views\Authentication\ChangePassword\ChangePassword.cshtml" />
+    <Content Include="Views\_Cfl\_CflBp\Partial\_CflBp_Panel_List_Partial.cshtml" />
+    <Content Include="Views\_Cfl\_CflBp\Partial\_CflBp_List_Partial.cshtml" />
+    <Content Include="Views\_Cfl\_CflItem\Partial\_CflItem_List_Partial.cshtml" />
+    <Content Include="Views\_Cfl\_CflItem\Partial\_CflItem_Panel_List_Partial.cshtml" />
+    <Content Include="Views\Setting\Layout\Partial\Layout_Form_Partial.cshtml" />
+    <Content Include="Views\Setting\Layout\Partial\Layout_List_Partial.cshtml" />
+    <Content Include="Views\Setting\Layout\Partial\Layout_Panel_List_Partial.cshtml" />
+    <Content Include="Views\Setting\Layout\Layout.cshtml" />
+    <Content Include="Views\_Cfl\_CflCoa\Partial\_CflCoa_List_Partial.cshtml" />
+    <Content Include="Views\_Cfl\_CflCoa\Partial\_CflCoa_Panel_List_Partial.cshtml" />
+    <Content Include="Views\Authentication\Role\Partial\Role_Form_Btn_Partial.cshtml" />
+    <Content Include="Views\Authentication\User\Partial\User_Form_Btn_Partial.cshtml" />
+    <Content Include="Views\Authentication\ChangePassword\Partial\ChangePassword_Form_Btn_Partial.cshtml" />
+    <Content Include="Views\Setting\Layout\Partial\Layout_Form_Btn_Partial.cshtml" />
+    <Content Include="Views\Setting\Alert\Partial\Alert_Form_Btn_Partial.cshtml" />
+    <Content Include="Views\Setting\Alert\Partial\Alert_Form_Partial.cshtml" />
+    <Content Include="Views\Setting\Alert\Partial\Alert_List_Partial.cshtml" />
+    <Content Include="Views\Setting\Alert\Partial\Alert_Panel_List_Partial.cshtml" />
+    <Content Include="Views\Setting\Alert\Alert.cshtml" />
+    <Content Include="Views\Setting\Alert\Partial\Alert_Form_TabUser_List_Partial.cshtml" />
+    <Content Include="Views\Setting\Alert\Partial\Alert_Form_TabRole_List_Partial.cshtml" />
+    <Content Include="Views\Setting\Alert\Partial\Alert_Form_TabSql_Partial.cshtml" />
+    <Content Include="Views\_CrystalReport\Layout\Print_List_Partial.cshtml" />
+    <Content Include="Views\_CrystalReport\Layout\Print_Panel_Partial.cshtml" />
+    <Content Include="Views\Report\ReportAlert\ReportAlert.cshtml" />
+    <Content Include="Views\Report\ReportAlert\Partial\ReportAlert_Form_Btn_Partial.cshtml" />
+    <Content Include="Views\Report\ReportAlert\Partial\ReportAlert_Form_Partial.cshtml" />
+    <Content Include="Views\Report\ReportAlert\Partial\ReportAlert_Form_TabDetail_List_Partial.cshtml" />
+    <Content Include="Views\Report\ReportAlert\Partial\ReportAlert_ListDetail_Partial.cshtml" />
+    <Content Include="Views\Setting\Query\Query.cshtml" />
+    <Content Include="Views\Setting\Query\Partial\Query_Form_Btn_Partial.cshtml" />
+    <Content Include="Views\Setting\Query\Partial\Query_Form_Partial.cshtml" />
+    <Content Include="Views\Setting\Query\Partial\Query_Form_TabRole_List_Partial.cshtml" />
+    <Content Include="Views\Setting\Query\Partial\Query_Form_TabSql_Partial.cshtml" />
+    <Content Include="Views\Setting\Query\Partial\Query_Form_TabUser_List_Partial.cshtml" />
+    <Content Include="Views\Setting\Query\Partial\Query_List_Partial.cshtml" />
+    <Content Include="Views\Setting\Query\Partial\Query_Panel_List_Partial.cshtml" />
+    <Content Include="Views\Report\ReportQuery\Partial\ReportQuery_Form_Btn_Partial.cshtml" />
+    <Content Include="Views\Report\ReportQuery\Partial\ReportQuery_Form_Partial.cshtml" />
+    <Content Include="Views\Report\ReportQuery\Partial\ReportQuery_Form_TabDetail_List_Partial.cshtml" />
+    <Content Include="Views\Report\ReportQuery\Partial\ReportQuery_ListDetail_Partial.cshtml" />
+    <Content Include="Views\Report\ReportQuery\ReportQuery.cshtml" />
+    <Content Include="Views\Setting\Report\Report.cshtml" />
+    <Content Include="Views\Setting\Report\Partial\Report_Form_Btn_Partial.cshtml" />
+    <Content Include="Views\Setting\Report\Partial\Report_Form_Partial.cshtml" />
+    <Content Include="Views\Setting\Report\Partial\Report_Form_TabRole_List_Partial.cshtml" />
+    <Content Include="Views\Setting\Report\Partial\Report_Form_TabUser_List_Partial.cshtml" />
+    <Content Include="Views\Setting\Report\Partial\Report_List_Partial.cshtml" />
+    <Content Include="Views\Setting\Report\Partial\Report_Panel_List_Partial.cshtml" />
+    <Content Include="Views\Setting\Report\Partial\Report_Form_TabParam_List_Partial.cshtml" />
+    <Content Include="Views\Report\ReportCustom\Partial\ReportCustom_Form_Btn_Partial.cshtml" />
+    <Content Include="Views\Report\ReportCustom\Partial\ReportCustom_Form_Partial.cshtml" />
+    <Content Include="Views\Report\ReportCustom\Partial\ReportCustom_Form_TabDetail_Param_Partial.cshtml" />
+    <Content Include="Views\Report\ReportCustom\Partial\ReportCustom_ParamDetail_Partial.cshtml" />
+    <Content Include="Views\Report\ReportCustom\ReportCustom.cshtml" />
+    <Content Include="Views\Setting\Layout\Partial\Layout_Form_TabRole_List_Partial.cshtml" />
+    <Content Include="Views\Setting\Layout\Partial\Layout_Form_TabUser_List_Partial.cshtml" />
+    <Content Include="Views\_Cfl\_CflDynamic\Partial\_CflDynamic_List_Partial.cshtml" />
+    <Content Include="Views\_Cfl\_CflDynamic\Partial\_CflDynamic_Panel_List_Partial.cshtml" />
+    <Content Include="Views\_Alert\_Alert\Partial\_Alert_List_Partial.cshtml" />
+    <Content Include="Views\_Alert\_Alert\Partial\_Alert_Panel_List_Partial.cshtml" />
+    <Content Include="Views\Authentication\Login\Login.cshtml" />
+    <Content Include="Views\Authentication\Login\Partial\Login_Form_Partial.cshtml" />
+    <Content Include="Views\Shared\_loginLayout_0.cshtml" />
+    <Content Include="Views\Shared\_loginLayout_1.cshtml" />
+    <Content Include="Views\Authentication\Login\Partial\Login_Panel_Partial.cshtml" />
+    <Content Include="Views\Shared\AlertPartialView.cshtml" />
+    <Content Include="Views\_ViewJe\_ViewJe\Partial\_ViewJeGvMasterPartial.cshtml" />
+    <Content Include="Views\_ViewJe\_ViewJe\Partial\_ViewJeGvDetailPartial.cshtml" />
+    <Content Include="Views\_ViewJe\_ViewJe\Partial\_ViewJePanel.cshtml" />
+    <Content Include="Views\Setting\ReportGroup\Partial\ReportGroup_Form_Btn_Partial.cshtml" />
+    <Content Include="Views\Setting\ReportGroup\Partial\ReportGroup_Form_Partial.cshtml" />
+    <Content Include="Views\Setting\ReportGroup\Partial\ReportGroup_List_Partial.cshtml" />
+    <Content Include="Views\Setting\ReportGroup\Partial\ReportGroup_Panel_List_Partial.cshtml" />
+    <Content Include="Views\Setting\ReportGroup\ReportGroup.cshtml" />
+    <Content Include="Views\Setting\QueryGroup\Partial\QueryGroup_Form_Btn_Partial.cshtml" />
+    <Content Include="Views\Setting\QueryGroup\Partial\QueryGroup_Form_Partial.cshtml" />
+    <Content Include="Views\Setting\QueryGroup\Partial\QueryGroup_List_Partial.cshtml" />
+    <Content Include="Views\Setting\QueryGroup\Partial\QueryGroup_Panel_List_Partial.cshtml" />
+    <Content Include="Views\Setting\QueryGroup\QueryGroup.cshtml" />
+    <Content Include="Views\Setting\AlertGroup\Partial\AlertGroup_Form_Btn_Partial.cshtml" />
+    <Content Include="Views\Setting\AlertGroup\Partial\AlertGroup_Form_Partial.cshtml" />
+    <Content Include="Views\Setting\AlertGroup\Partial\AlertGroup_List_Partial.cshtml" />
+    <Content Include="Views\Setting\AlertGroup\Partial\AlertGroup_Panel_List_Partial.cshtml" />
+    <Content Include="Views\Setting\AlertGroup\AlertGroup.cshtml" />
+    <Content Include="Views\Setting\GeneralSetting\GeneralSetting.cshtml" />
+    <Content Include="Views\Setting\GeneralSetting\Partial\GeneralSetting_Form_Btn_Partial.cshtml" />
+    <Content Include="Views\Setting\GeneralSetting\Partial\GeneralSetting_Form_Partial.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Setting\Approval\Partial\Approval_Form_Btn_Partial.cshtml" />
+    <Content Include="Views\Setting\Approval\Partial\Approval_Form_Partial.cshtml" />
+    <Content Include="Views\Setting\Approval\Partial\Approval_Form_TabRole_List_Partial.cshtml" />
+    <Content Include="Views\Setting\Approval\Partial\Approval_Form_TabUser_List_Partial.cshtml" />
+    <Content Include="Views\Setting\Approval\Partial\Approval_List_Partial.cshtml" />
+    <Content Include="Views\Setting\Approval\Partial\Approval_Panel_List_Partial.cshtml" />
+    <Content Include="Views\Setting\Approval\Approval.cshtml" />
+    <Content Include="Views\_LoginApproval\_LoginApproval\Partial\LoginApproval_Form_Partial.cshtml" />
+    <Content Include="Views\_LoginApproval\_LoginApproval\Partial\LoginApproval_Panel_Partial.cshtml" />
+    <Content Include="Views\Setting\ReportGroup\Partial\ReportGroup_Form_TabUser_List_Partial.cshtml" />
+    <Content Include="Views\Setting\ReportGroup\Partial\ReportGroup_Form_TabRole_List_Partial.cshtml" />
+    <Content Include="Views\Setting\Query\Partial\Query_Form_TabParam_List_Partial.cshtml" />
+    <Content Include="Views\Report\ReportQuery\Partial\ReportQuery_ParamDetail_Partial.cshtml" />
+    <Content Include="Views\Setting\QueryGroup\Partial\QueryGroup_Form_TabUser_List_Partial.cshtml" />
+    <Content Include="Views\Setting\QueryGroup\Partial\QueryGroup_Form_TabRole_List_Partial.cshtml" />
+    <Content Include="Views\Shared\_rootLogin.cshtml" />
+    <Content Include="Views\Transaction\Payment\PaymentIn\Partial\PaymentIn_AccountCoaNameComboBox_Partial.cshtml" />
+    <Content Include="Views\Transaction\Payment\PaymentIn\Partial\PaymentIn_CreditCardOwnerComboBox_Partial.cshtml" />
+    <Content Include="Views\Transaction\Payment\PaymentIn\Partial\PaymentIn_Form_Btn_Partial.cshtml" />
+    <Content Include="Views\Transaction\Payment\PaymentIn\Partial\PaymentIn_Form_Partial.cshtml" />
+    <Content Include="Views\Transaction\Payment\PaymentIn\Partial\PaymentIn_Form_TabAccount_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Payment\PaymentIn\Partial\PaymentIn_Form_TabAp_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Payment\PaymentIn\Partial\PaymentIn_Form_TabArCorporate_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Payment\PaymentIn\Partial\PaymentIn_Form_TabCc_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Payment\PaymentIn\Partial\PaymentIn_Form_TabCheck_BankCheckComboBox_Partial.cshtml" />
+    <Content Include="Views\Transaction\Payment\PaymentIn\Partial\PaymentIn_Form_TabCheck_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Payment\PaymentIn\Partial\PaymentIn_Form_TabPayment_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Payment\PaymentIn\Partial\PaymentIn_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Payment\PaymentIn\Partial\PaymentIn_Panel_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Payment\PaymentIn\PaymentIn.cshtml" />
+    <Content Include="Views\_Cfl\_CflContactPerson\Partial\_CflContactPerson_List_Partial.cshtml" />
+    <Content Include="Views\_Cfl\_CflContactPerson\Partial\_CflContactPerson_Panel_List_Partial.cshtml" />
+    <Content Include="Views\_Cfl\_CflBankCheck\Partial\_CflBankCheck_List_Partial.cshtml" />
+    <Content Include="Views\_Cfl\_CflBankCheck\Partial\_CflBankCheck_Panel_List_Partial.cshtml" />
+    <Content Include="Views\_Cfl\_CflCreditCard\Partial\_CflCreditCard_List_Partial.cshtml" />
+    <Content Include="Views\_Cfl\_CflCreditCard\Partial\_CflCreditCard_Panel_List_Partial.cshtml" />
+    <Content Include="Views\Transaction\Payment\PaymentIn\Partial\PaymentIn_Form_TabCc_CreditCardComboBox_Partial.cshtml" />
+    <Content Include="Views\Transaction\Payment\PaymentIn\Partial\PaymentIn_Form_TabCc_CoaComboBox_Partial.cshtml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\AuthConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Areas\Admin\Controllers\ElmahController.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Controllers\Authentication\Logout\LogoutController.cs" />
+    <Compile Include="Controllers\Authentication\Login\LoginController.cs" />
+    <Compile Include="Controllers\Transaction\Payment\PaymentIn\PaymentInController.cs" />
+    <Compile Include="Controllers\Transaction\Payment\PaymentIn\PaymentInController.List.cs" />
+    <Compile Include="Controllers\Transaction\Payment\PaymentIn\PaymentInController.List.Export.cs" />
+    <Compile Include="Controllers\Transaction\Payment\PaymentIn\PaymentInController.Nav.cs" />
+    <Compile Include="Controllers\Transaction\Payment\PaymentIn\PaymentInController.Tab.Ap.cs" />
+    <Compile Include="Controllers\Transaction\Payment\PaymentIn\PaymentInController.Tab.ArCorporate.cs" />
+    <Compile Include="Controllers\_Cfl\_CflCreditCard\_CflCreditCardController.List.cs" />
+    <Compile Include="Controllers\_Cfl\_CflCreditCard\_CflCreditCardController.List.Export.cs" />
+    <Compile Include="Controllers\_Cfl\_CflBankCheck\_CflBankCheckController.List.cs" />
+    <Compile Include="Controllers\_Cfl\_CflBankCheck\_CflBankCheckController.List.Export.cs" />
+    <Compile Include="Controllers\_Cfl\_CflContactPerson\_CflContactPersonController.List.cs" />
+    <Compile Include="Controllers\_Cfl\_CflContactPerson\_CflContactPersonController.List.Export.cs" />
+    <Compile Include="Controllers\_LoginApproval\_LoginApprovalController.cs" />
+    <Compile Include="Controllers\Setting\AlertGroup\AlertGroupController.cs" />
+    <Compile Include="Controllers\Setting\AlertGroup\AlertGroupController.List.cs" />
+    <Compile Include="Controllers\Setting\AlertGroup\AlertGroupController.List.Export.cs" />
+    <Compile Include="Controllers\Setting\AlertGroup\AlertGroupController.Nav.cs" />
+    <Compile Include="Controllers\Setting\Alert\AlertController.cs" />
+    <Compile Include="Controllers\Setting\Alert\AlertController.List.cs" />
+    <Compile Include="Controllers\Setting\Alert\AlertController.List.Export.cs" />
+    <Compile Include="Controllers\Setting\Alert\AlertController.Nav.cs" />
+    <Compile Include="Controllers\Setting\Approval\ApprovalController.cs" />
+    <Compile Include="Controllers\Setting\Approval\ApprovalController.List.cs" />
+    <Compile Include="Controllers\Setting\Approval\ApprovalController.List.Export.cs" />
+    <Compile Include="Controllers\Setting\Approval\ApprovalController.Nav.cs" />
+    <Compile Include="Controllers\Setting\GeneralSetting\GeneralSettingController.cs" />
+    <Compile Include="Controllers\Setting\Layout\LayoutController.cs" />
+    <Compile Include="Controllers\Setting\Layout\LayoutController.DownloadRpt.cs" />
+    <Compile Include="Controllers\Setting\Layout\LayoutController.List.cs" />
+    <Compile Include="Controllers\Setting\Layout\LayoutController.List.Export.cs" />
+    <Compile Include="Controllers\Setting\Layout\LayoutController.Nav.cs" />
+    <Compile Include="Controllers\Setting\QueryGroup\QueryGroupController.cs" />
+    <Compile Include="Controllers\Setting\QueryGroup\QueryGroupController.List.cs" />
+    <Compile Include="Controllers\Setting\QueryGroup\QueryGroupController.List.Export.cs" />
+    <Compile Include="Controllers\Setting\QueryGroup\QueryGroupController.Nav.cs" />
+    <Compile Include="Controllers\Setting\Query\QueryController.cs" />
+    <Compile Include="Controllers\Setting\Query\QueryController.List.cs" />
+    <Compile Include="Controllers\Setting\Query\QueryController.List.Export.cs" />
+    <Compile Include="Controllers\Setting\Query\QueryController.Nav.cs" />
+    <Compile Include="Controllers\Setting\ReportGroup\ReportGroupController.cs" />
+    <Compile Include="Controllers\Setting\ReportGroup\ReportGroupController.List.cs" />
+    <Compile Include="Controllers\Setting\ReportGroup\ReportGroupController.List.Export.cs" />
+    <Compile Include="Controllers\Setting\ReportGroup\ReportGroupController.Nav.cs" />
+    <Compile Include="Controllers\Setting\Report\ReportController.cs" />
+    <Compile Include="Controllers\Setting\Report\ReportController.DownloadRpt.cs" />
+    <Compile Include="Controllers\Setting\Report\ReportController.List.cs" />
+    <Compile Include="Controllers\Setting\Report\ReportController.List.Export.cs" />
+    <Compile Include="Controllers\Setting\Report\ReportController.Nav.cs" />
+    <Compile Include="Controllers\_GetData\_GetDataController.cs" />
+    <Compile Include="Controllers\Report\ReportCustom\ReportCustomController.cs" />
+    <Compile Include="Controllers\Report\ReportCustom\ReportCustomController.Print.cs" />
+    <Compile Include="Controllers\Report\ReportQuery\ReportQueryController.cs" />
+    <Compile Include="Controllers\Report\ReportQuery\ReportQueryController.ListDetail.cs" />
+    <Compile Include="Controllers\Report\ReportQuery\ReportQueryController.ListDetail.Export.cs" />
+    <Compile Include="Controllers\Report\ReportAlert\ReportAlertController.ListDetail.Export.cs" />
+    <Compile Include="Controllers\Report\ReportAlert\ReportAlertController.cs" />
+    <Compile Include="Controllers\Report\ReportAlert\ReportAlertController.ListDetail.cs" />
+    <Compile Include="Controllers\_Alert\_AlertController.List.cs" />
+    <Compile Include="Controllers\_Cfl\_CflDynamic\_CflDynamicController.List.cs" />
+    <Compile Include="Controllers\_Cfl\_CflDynamic\_CflDynamicController.List.Export.cs" />
+    <Compile Include="Controllers\_Cfl\_CflCoa\_CflCoaController.List.cs" />
+    <Compile Include="Controllers\_Cfl\_CflCoa\_CflCoaController.List.Export.cs" />
+    <Compile Include="Controllers\_CrystalReport\_CrystalReportController.cs" />
+    <Compile Include="Controllers\_ViewJe\_ViewJeController.cs" />
+    <Compile Include="IduRazorViewEngine.cs" />
+    <Compile Include="Controllers\Authentication\ChangePassword\ChangePasswordController.cs" />
+    <Compile Include="Controllers\_Cfl\_CflItem\_CflItemController.List.cs" />
+    <Compile Include="Controllers\_Cfl\_CflItem\_CflItemController.List.Export.cs" />
+    <Compile Include="Controllers\_Cfl\_CflBp\_CflBpController.List.Export.cs" />
+    <Compile Include="Controllers\_Cfl\_CflBp\_CflBpController.List.cs" />
+    <Compile Include="Controllers\Authentication\User\UserController.cs" />
+    <Compile Include="Controllers\Authentication\User\UserController.List.Export.cs" />
+    <Compile Include="Controllers\Authentication\User\UserController.List.cs" />
+    <Compile Include="Controllers\Authentication\User\UserController.Nav.cs" />
+    <Compile Include="Controllers\Authentication\Role\RoleController.Nav.cs" />
+    <Compile Include="Controllers\Authentication\Role\RoleController.List.cs" />
+    <Compile Include="Controllers\Authentication\Role\RoleController.List.Export.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\Authentication\Role\RoleController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rpts\Rpt.aspx.cs">
+      <DependentUpon>Rpt.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Rpts\Rpt.aspx.designer.cs">
+      <DependentUpon>Rpt.aspx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Themes\" />
+    <Folder Include="Areas\Admin\View\" />
+    <Folder Include="Content\Attachment\HotelMatchingBilling\" />
+    <Folder Include="Content\Attachment\IncentiveInquiry\" />
+    <Folder Include="Content\Attachment\MiceInquiry\" />
+    <Folder Include="Content\Attachment\TicketReservation\" />
+    <Folder Include="Content\Attachment\TourCode\" />
+    <Folder Include="Content\HtmlEditor\TicketAirlineConfirmation\Images\" />
+    <Folder Include="Content\HtmlEditor\TicketAirlineConfirmation\Thumbnails\" />
+    <Folder Include="Content\HtmlEditor\TicketReservation\Attachment\" />
+    <Folder Include="Content\HtmlEditor\TicketReservation\Images\" />
+    <Folder Include="Content\HtmlEditor\TicketReservation\Thumbnails\" />
+    <Folder Include="Content\Temp\" />
+    <Folder Include="Content\Upload\" />
+    <Folder Include="Controllers\Master\" />
+    <Folder Include="Models\" />
+    <Folder Include="Rpts\Layout\" />
+    <Folder Include="Views\Master\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Rpts\Report1.rpt" />
+    <EmbeddedResource Include="Rpts\Report2.rpt" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>7</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="SAPbobsCOM">
+      <Guid>{FC8030BE-F5D2-4B8E-8F92-44228FE30090}</Guid>
+      <VersionMajor>9</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="stdole">
+      <Guid>{00020430-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>58488</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost/IGU_APP</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>http://localhost/SQL_APP</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

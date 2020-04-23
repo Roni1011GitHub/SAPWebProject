@@ -1,0 +1,270 @@
+﻿@using Models._Utils;
+
+@{
+    GridViewModel viewModel = Model;
+
+    var cpGvFind_FilterExpression = GetSqlFromGridViewModelState.getSqlCriteria(viewModel);
+    var cpGvFind_SortExpression = GetSqlFromGridViewModelState.getSqlSort(viewModel);
+    var cpGvFind_PageIndex = viewModel.Pager.PageIndex;
+    var cpGvFind_PageSize = viewModel.Pager.PageSize;
+
+    string cpGvFind_CflType = "";
+    string cpGvFind_CflName = "";
+    string cpGvFind_CflHeader = "";
+    string cpGvFind_CflSqlWhere = "";
+    string cpGvFind_CflIsMulti = "N";
+
+
+    if (Request["hidden_CflType"] != null)
+    {
+        cpGvFind_CflType = Request["hidden_CflType"];
+    }
+
+    if (Request["hidden_CflName"] != null)
+    {
+        cpGvFind_CflName = Request["hidden_CflName"];
+    }
+
+    if (Request["hidden_CflHeader"] != null)
+    {
+        cpGvFind_CflHeader = Request["hidden_CflHeader"];
+    }
+
+    if (Request["hidden_CflSqlWhere"] != null)
+    {
+        cpGvFind_CflSqlWhere = Request["hidden_CflSqlWhere"];
+    }
+
+
+    if (Request["hidden_CflIsMulti"] != null)
+    {
+        cpGvFind_CflIsMulti = Request["hidden_CflIsMulti"];
+    } 
+    
+}
+
+@Html.DevExpress().GridView(settings =>
+   {
+       settings.Name = "gvCflBpList" + cpGvFind_CflName;
+       settings.KeyFieldName = "OCRD___.CardCode";
+       settings.CallbackRouteValues = new { Controller = "_CflBp", Action = "ListPartial" };
+
+      
+
+       if (cpGvFind_CflIsMulti == "N")
+       {
+           settings.Columns.Add(column =>
+           {
+               column.Caption = "#";
+
+               column.SetDataItemTemplateContent(c =>
+               {
+
+                   ViewContext.Writer.Write(
+
+                    Html.DevExpress().HyperLink(settingsHL =>
+                    {
+                        settingsHL.Name = "CflBpChoose_" + cpGvFind_CflName + DataBinder.Eval(c.DataItem, "OCRD___.CardCode") + "_" + Guid.NewGuid().ToString();
+                        settingsHL.NavigateUrl = "javascript:void(0)";
+                        settingsHL.Properties.Text = "Choose";
+                        settingsHL.Properties.ClientSideEvents.Click = string.Format("function(s, e) {{ OnClickChoose_CflBp{1}(s, e, {0}); }}", new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(c.DataItem), cpGvFind_CflName);
+                    }).GetHtml()
+
+
+                );
+               });
+               column.SetHeaderTemplateContent(c =>
+               {
+                   ViewContext.Writer.Write(
+                      "#Action#"
+                   );
+               });
+
+               column.Settings.AllowDragDrop = DefaultBoolean.False;
+               column.Settings.AllowSort = DefaultBoolean.False;
+               column.Width = 70;
+           });
+
+       }
+       else
+       {
+           settings.CommandColumn.Visible = true;
+           settings.CommandColumn.ShowSelectCheckbox = true;
+
+           settings.CommandColumn.SelectAllCheckboxMode = GridViewSelectAllCheckBoxMode.Page;
+           settings.CommandColumn.Width = 70;
+       }
+       
+
+       settings.Settings.ShowFilterRow = true;
+       settings.Settings.ShowFilterRowMenu = true; 
+      
+       settings.Columns.Add(column =>
+       {
+           column.FieldName = "OCRD___.CardCode";
+           column.Name = "CardCode";
+           column.Caption = "BP Code";
+           column.Width = 100;
+           column.ColumnType = MVCxGridViewColumnType.TextBox;
+
+           //column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+
+       }); 
+     
+
+       settings.Columns.Add(column =>
+       {
+           column.FieldName = "OCRD___.CardName";
+           column.Name = "CardName";
+           column.Caption = "BP Name";
+           column.Width = 300;
+           column.ColumnType = MVCxGridViewColumnType.TextBox;
+
+           column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       });
+       
+       
+      
+       settings.Columns.Add(column =>
+       {
+           column.FieldName = "OCRD___.AddID";
+           column.Name = "AddID";
+           column.Caption = "Old Code";
+           column.Width = 80;
+           column.ColumnType = MVCxGridViewColumnType.TextBox;
+
+           //column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+
+       }); 
+       
+       settings.Columns.Add(column =>
+       {
+           column.FieldName = "CRD1___.City";
+           column.Name = "City";
+           column.Caption = "City";
+           column.Width = 150;
+           column.ColumnType = MVCxGridViewColumnType.TextBox;
+
+           //column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+
+       });
+       
+     
+       settings.Columns.Add(column =>
+       {
+           column.FieldName = "OCRD___.Address";
+           column.Name = "Address";
+           //column.Caption = "150";
+          
+           column.ColumnType = MVCxGridViewColumnType.TextBox;
+
+           column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+
+       });
+
+       settings.Columns.Add(column =>
+       {
+           column.FieldName = "OPRC___.GrpCode";
+           column.Name = "GrpCode";
+           column.Caption = "Branch";
+           column.Width = 100;
+           column.ColumnType = MVCxGridViewColumnType.TextBox;
+
+           //column.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+
+       }); 
+
+       //foreach (GridViewDataColumn col in settings.Columns)
+       //{
+       //    col.Settings.AutoFilterCondition = AutoFilterCondition.Contains;
+       //}
+       
+       settings.SettingsPager.Position = PagerPosition.Bottom;
+       settings.SettingsPager.FirstPageButton.Visible = true;
+       settings.SettingsPager.LastPageButton.Visible = true;
+       settings.SettingsPager.AlwaysShowPager = true;
+       settings.Width = System.Web.UI.WebControls.Unit.Percentage(100); 
+
+
+       if (cpGvFind_PageIndex == 0)
+       {
+           settings.SettingsPager.PageSizeItemSettings.Visible = true;
+       }
+
+
+       settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50" };
+
+       settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+       //settings.Settings.VerticalScrollableHeight = 400;
+ 
+
+       settings.SettingsBehavior.AllowFocusedRow = true;
+      settings.Settings.ShowFilterBar = GridViewStatusBarMode.Hidden;
+
+       settings.CustomBindingRouteValuesCollection.Add(
+           GridViewOperationType.Paging,
+           new { Controller = "_CflBp", Action = "ListPaging" }
+       );
+
+       settings.CustomBindingRouteValuesCollection.Add(
+           GridViewOperationType.Filtering,
+           new { Controller = "_CflBp", Action = "ListFiltering" }
+       );
+
+       settings.CustomBindingRouteValuesCollection.Add(
+           GridViewOperationType.Sorting,
+           new { Controller = "_CflBp", Action = "ListSorting" }
+       );
+
+
+       settings.CustomJSProperties = (sender, e) =>
+       {
+           e.Properties["cpGvFind_FilterExpression"] = cpGvFind_FilterExpression;
+           e.Properties["cpGvFind_SortExpression"] = cpGvFind_SortExpression;
+           e.Properties["cpGvFind_PageIndex"] = cpGvFind_PageIndex;
+           e.Properties["cpGvFind_PageSize"] = cpGvFind_PageSize;
+           e.Properties["cpGvFind_CflType"] = cpGvFind_CflType;
+           e.Properties["cpGvFind_CflName"] = cpGvFind_CflName;
+           e.Properties["cpGvFind_CflHeader"] = cpGvFind_CflHeader;
+           e.Properties["cpGvFind_CflSqlWhere"] = cpGvFind_CflSqlWhere;
+           e.Properties["cpGvFind_CflIsMulti"] = cpGvFind_CflIsMulti;
+
+           if (cpGvFind_CflType == "HotelVoucher_Hotel")
+           {
+               string cpGvFind_CflHotelType = "";
+
+               if (Request["hidden_CflHotelType"] != null)
+               {
+                   cpGvFind_CflHotelType = Request["hidden_CflHotelType"];
+                   e.Properties["cpGvFind_CflHotelType"] = cpGvFind_CflHotelType;
+               }
+           }
+ 
+       };
+
+       string additionParam = "";
+       if (cpGvFind_CflType == "HotelVoucher_Hotel")
+       {
+           additionParam = " e.customArgs['hidden_CflHotelType']=HotelType.GetValue(); ";
+
+       }
+       additionParam += " e.customArgs['hidden_IsFindCurrentBranch']=IsFindCflBpCurrentBranch" + cpGvFind_CflName + ".GetValue(); ";
+
+       settings.ClientSideEvents.BeginCallback = string.Format("function(s, e) {{ {0}  e.customArgs['hidden_CflType']=s.cpGvFind_CflType; e.customArgs['hidden_CflName']=s.cpGvFind_CflName; e.customArgs['hidden_CflHeader']=s.cpGvFind_CflHeader; e.customArgs['hidden_CflSqlWhere']=s.cpGvFind_CflSqlWhere;e.customArgs['hidden_CflIsMulti']=s.cpGvFind_CflIsMulti; }}", additionParam);
+       settings.ClientSideEvents.SelectionChanged = string.Format("function(s, e) {{ OnSelectionChanged_CflBp{0}(s, e); }}", cpGvFind_CflName);
+
+       foreach (GridViewDataColumn column in settings.Columns)
+       {
+           column.Settings.AllowAutoFilterTextInputTimer = DevExpress.Utils.DefaultBoolean.False; 
+           
+       }
+
+
+       settings.BeforeGetCallbackResult = (sender, e) =>
+       {
+           MVCxGridView gridView = sender as MVCxGridView;
+           Models._Utils.General.GridViewFilterExpression(gridView, settings);
+       };
+
+       
+   }).BindToCustomData(Model).GetHtml()

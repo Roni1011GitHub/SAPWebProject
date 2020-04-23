@@ -1,0 +1,453 @@
+﻿@using Models; 
+
+@{ 
+    var Id = Convert.ToInt64(Request["cbId"]);
+
+    if (ViewBag.Id != null)
+    {
+        Id = ViewBag.Id;
+    }
+    
+
+    if (ViewBag.ReadOnly == null)
+    {
+        ViewBag.ReadOnly = false;
+        string status = Models._PetaPoco.DbProvider.dbApp.ExecuteScalar<string>("SELECT TOP 1 T0.Status FROM Tx_PaymentIn T0 WHERE T0.Id=@0", Id);
+        if (status!= "Draft")
+        {
+            ViewBag.ReadOnly = true;
+        }
+    }
+    
+}
+
+@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gvPaymentInApDetail";
+    settings.KeyFieldName = "DetId";
+    settings.Width = Unit.Percentage(100);
+
+    settings.CallbackRouteValues = new { Controller = "PaymentIn", Action = "TabApListPartial" };
+
+    settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
+    settings.Settings.VerticalScrollableHeight = 200;
+    settings.Settings.VerticalScrollBarMode = ScrollBarMode.Auto;
+
+    settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
+    settings.SettingsEditing.BatchEditSettings.EditMode = GridViewBatchEditMode.Row;
+    settings.SettingsEditing.BatchEditSettings.StartEditAction = GridViewBatchStartEditAction.Click;
+    settings.SettingsEditing.NewItemRowPosition = GridViewNewItemRowPosition.Bottom;
+
+    settings.CommandColumn.Visible = !ViewBag.ReadOnly;
+
+    settings.CommandColumn.ShowDeleteButton = false;
+    settings.CommandColumn.ShowNewButtonInHeader = false;
+    settings.Enabled = true;
+
+    settings.CommandColumn.Width = 50;
+
+    settings.Settings.ShowStatusBar = GridViewStatusBarMode.Hidden;
+
+
+    GridViewCommandColumnCustomButton customButton = new GridViewCommandColumnCustomButton() { ID = "deleteButton", Text = "Delete" };
+    settings.CommandColumn.CustomButtons.Add(customButton);
+
+    settings.ClientSideEvents.CustomButtonClick = "gvPaymentInApDetailOnCustomButtonClick";
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "DetId";
+        column.Name = "DetId";
+        column.Caption = "DetId";
+        column.Width = 0;
+    });
+
+    //settings.Columns.Add(column =>
+    //{
+    //    column.FieldName = "BranchName";
+    //    column.Name = "BranchName";
+    //    column.Caption = "Branch";
+
+
+    //    column.ColumnType = MVCxGridViewColumnType.TextBox;
+    //    column.Width = 50;
+    //    column.ReadOnly = true;
+    //    column.Settings.AllowSort = DefaultBoolean.False;
+
+    //    column.PropertiesEdit.Style.BackColor = System.Drawing.Color.Lavender;
+    //    column.CellStyle.BackColor = System.Drawing.Color.Lavender;
+    //    column.CellStyle.ForeColor = System.Drawing.Color.Black;
+    //    column.EditFormSettings.Visible = DefaultBoolean.False;
+
+    //    var txt = column.PropertiesEdit as TextBoxProperties;
+    //    txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+
+    //});
+
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "InvoiceTypeName";
+        column.Name = "InvoiceTypeName";
+        column.Caption = "Type";
+
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 150;
+        column.ReadOnly = true;
+        column.Settings.AllowSort = DefaultBoolean.False;
+
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.Lavender;
+        column.CellStyle.BackColor = System.Drawing.Color.Lavender;
+        column.CellStyle.ForeColor = System.Drawing.Color.Black;
+        column.EditFormSettings.Visible = DefaultBoolean.False;
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+
+    });
+
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "InvoiceNo";
+        column.Name = "InvoiceNo";
+        column.Caption = "Trans No";
+
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 150;
+        column.ReadOnly = true;
+        column.Settings.AllowSort = DefaultBoolean.False;
+
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.Lavender;
+        column.CellStyle.BackColor = System.Drawing.Color.Lavender;
+        column.CellStyle.ForeColor = System.Drawing.Color.Black;
+        column.EditFormSettings.Visible = DefaultBoolean.False;
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "InvoiceDate";
+        column.Name = "InvoiceDate";
+        column.Caption = "Trans Date";
+        column.ColumnType = MVCxGridViewColumnType.DateEdit;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        column.Width = 75;
+        column.ReadOnly = true;
+
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.Lavender;
+        column.CellStyle.BackColor = System.Drawing.Color.Lavender;
+        column.CellStyle.ForeColor = System.Drawing.Color.Black;
+        column.EditFormSettings.Visible = DefaultBoolean.False;
+
+        var txt = column.PropertiesEdit as DateEditProperties;
+        txt.DisplayFormatString = "dd/MM/yyyy";
+        txt.EditFormatString = "dd/MM/yyyy";
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "InvoiceDueDate";
+        column.Name = "InvoiceDueDate";
+        column.Caption = "Due Date";
+        column.ColumnType = MVCxGridViewColumnType.DateEdit;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        column.Width = 0;
+        column.ReadOnly = true;
+
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.Lavender;
+        column.CellStyle.BackColor = System.Drawing.Color.Lavender;
+        column.CellStyle.ForeColor = System.Drawing.Color.Black;
+        column.EditFormSettings.Visible = DefaultBoolean.False;
+
+        var txt = column.PropertiesEdit as DateEditProperties;
+        txt.DisplayFormatString = "dd/MM/yyyy";
+        txt.EditFormatString = "dd/MM/yyyy";
+    });
+
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "InvoiceCurCode";
+        column.Name = "InvoiceCurCode";
+        column.Caption = "Currency";
+
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 70;
+        column.ReadOnly = true;
+        column.Settings.AllowSort = DefaultBoolean.False;
+
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.Lavender;
+        column.CellStyle.BackColor = System.Drawing.Color.Lavender;
+        column.CellStyle.ForeColor = System.Drawing.Color.Black;
+        column.EditFormSettings.Visible = DefaultBoolean.False;
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.DisplayFormatInEditMode = false;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.ReadOnlyStyle.BackColor = System.Drawing.Color.Lavender; ;
+
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "InvoiceCurRate";
+        column.Name = "InvoiceCurRate";
+        column.Caption = "Rate";
+        column.HeaderStyle.HorizontalAlign = HorizontalAlign.Right;
+        column.Width = 100;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        column.ReadOnly = true;
+        //column.EditFormSettings.Visible = DefaultBoolean.False;
+
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.Lavender;
+        column.CellStyle.BackColor = System.Drawing.Color.Lavender;
+        column.CellStyle.ForeColor = System.Drawing.Color.Black;
+        //column.EditFormSettings.Visible = DefaultBoolean.False;
+        //column.PropertiesEdit.EnableClientSideAPI = false;
+
+        column.ColumnType = MVCxGridViewColumnType.SpinEdit;
+        var txt = column.PropertiesEdit as SpinEditProperties;
+        txt.NumberType = SpinEditNumberType.Float;
+        txt.DisplayFormatString = "#,###.00";
+        txt.DisplayFormatInEditMode = true;
+        txt.AllowMouseWheel = false;
+
+
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.Style.HorizontalAlign = HorizontalAlign.Right;
+        txt.ReadOnlyStyle.BackColor = System.Drawing.Color.Lavender;
+
+
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "InvoiceAmountTc";
+        column.Name = "InvoiceAmountTc";
+        column.Caption = "Total";
+        column.HeaderStyle.HorizontalAlign = HorizontalAlign.Right;
+        column.Width = 100;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        column.ReadOnly = true;
+
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.Lavender;
+        column.CellStyle.BackColor = System.Drawing.Color.Lavender;
+        column.CellStyle.ForeColor = System.Drawing.Color.Black;
+        column.EditFormSettings.Visible = DefaultBoolean.False;
+
+        column.ColumnType = MVCxGridViewColumnType.SpinEdit;
+        var txt = column.PropertiesEdit as SpinEditProperties;
+        txt.NumberType = SpinEditNumberType.Float;
+        txt.DisplayFormatString = "#,###.00";
+        txt.DisplayFormatInEditMode = true;
+        txt.AllowMouseWheel = false;
+
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.Style.HorizontalAlign = HorizontalAlign.Right;
+        txt.ReadOnlyStyle.BackColor = System.Drawing.Color.Lavender;
+
+
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "InvoiceOutstandingAmountTc";
+        column.Name = "InvoiceOutstandingAmountTc";
+        column.Caption = "Outstanding";
+        column.HeaderStyle.HorizontalAlign = HorizontalAlign.Right;
+        column.Width = 100;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        column.ReadOnly = true;
+
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.Lavender;
+        column.CellStyle.BackColor = System.Drawing.Color.Lavender;
+        column.CellStyle.ForeColor = System.Drawing.Color.Black;
+        column.EditFormSettings.Visible = DefaultBoolean.False;
+
+        column.ColumnType = MVCxGridViewColumnType.SpinEdit;
+        var txt = column.PropertiesEdit as SpinEditProperties;
+        txt.NumberType = SpinEditNumberType.Float;
+        txt.DisplayFormatString = "#,###.00";
+        txt.DisplayFormatInEditMode = true;
+        txt.AllowMouseWheel = false;
+
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.Style.HorizontalAlign = HorizontalAlign.Right;
+        txt.ReadOnlyStyle.BackColor = System.Drawing.Color.Lavender;
+
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "PaymentAmountTc";
+        column.Name = "PaymentAmountTc";
+        column.Caption = "Payment";
+        column.HeaderStyle.HorizontalAlign = HorizontalAlign.Right;
+        column.Width = 100;
+        column.Settings.AllowSort = DefaultBoolean.False;
+
+        column.ColumnType = MVCxGridViewColumnType.SpinEdit;
+        var txt = column.PropertiesEdit as SpinEditProperties;
+        txt.NumberType = SpinEditNumberType.Float;
+        txt.DisplayFormatString = "#,###.00";
+        txt.DisplayFormatInEditMode = true;
+        txt.AllowMouseWheel = false;
+
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.Style.HorizontalAlign = HorizontalAlign.Right;
+
+        txt.ClientSideEvents.ValueChanged = "function (s,e) {{ gvPaymentInApDetailPaymentAmountTcOnValueChanged(s,e); }}";
+
+        ASPxSummaryItem summaryItem = new ASPxSummaryItem(column.FieldName, DevExpress.Data.SummaryItemType.Sum);
+        summaryItem.Tag = column.FieldName + "_Sum";
+        summaryItem.DisplayFormat = "{0}";
+        settings.TotalSummary.Add(summaryItem);
+
+        column.SetFooterTemplateContent(c =>
+        {
+            Html.DevExpress().Label(lbSettings =>
+            {
+                string fieldName = (c.Column as GridViewDataColumn).FieldName;
+                lbSettings.Name = "gvPaymentInApDetailLabel" + fieldName + "Sum";
+                lbSettings.Properties.EnableClientSideAPI = true;
+                ASPxSummaryItem summaryItem1 = c.Grid.TotalSummary.First(i => i.Tag == (fieldName + "_Sum"));
+                lbSettings.Text = decimal.Parse(c.Grid.GetTotalSummaryValue(summaryItem1).ToString()).ToString("#,###.00");
+
+                lbSettings.CustomJSProperties = (sender, e) =>
+                {
+                    e.Properties["cpValue"] = c.Grid.GetTotalSummaryValue(summaryItem1).ToString();
+                };
+
+            }).Render();
+        });
+
+
+
+        if (ViewBag.ReadOnly)
+        {
+            column.PropertiesEdit.Style.BackColor = System.Drawing.Color.Lavender;
+            column.CellStyle.BackColor = System.Drawing.Color.Lavender;
+            column.ReadOnly = true;
+        }
+
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "PaymentAmountLc";
+        column.Name = "PaymentAmountLc";
+        column.Caption = "Payment (IDR)";
+        column.HeaderStyle.HorizontalAlign = HorizontalAlign.Right;
+        column.Width = 150;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        column.ReadOnly = true;
+        //column.EditFormSettings.Visible = DefaultBoolean.False;
+
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.Lavender;
+        column.CellStyle.BackColor = System.Drawing.Color.Lavender;
+        column.CellStyle.ForeColor = System.Drawing.Color.Black;
+        //column.EditFormSettings.Visible = DefaultBoolean.False;
+        //column.PropertiesEdit.EnableClientSideAPI = false;
+
+        column.ColumnType = MVCxGridViewColumnType.SpinEdit;
+        var txt = column.PropertiesEdit as SpinEditProperties;
+        txt.NumberType = SpinEditNumberType.Float;
+        txt.DisplayFormatString = "#,###.00";
+        txt.DisplayFormatInEditMode = true;
+        txt.AllowMouseWheel = false;
+
+        txt.ClientInstanceName = "gvPaymentInApDetailPaymentAmountLc";
+
+
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.Style.HorizontalAlign = HorizontalAlign.Right;
+        txt.ReadOnlyStyle.BackColor = System.Drawing.Color.Lavender;
+
+        ASPxSummaryItem summaryItem = new ASPxSummaryItem(column.FieldName, DevExpress.Data.SummaryItemType.Sum);
+        summaryItem.Tag = column.FieldName + "_Sum";
+        summaryItem.DisplayFormat = "{0}";
+        settings.TotalSummary.Add(summaryItem);
+
+        column.SetFooterTemplateContent(c =>
+        {
+            Html.DevExpress().Label(lbSettings =>
+            {
+                string fieldName = (c.Column as GridViewDataColumn).FieldName;
+                lbSettings.Name = "gvPaymentInApDetailLabel" + fieldName + "Sum";
+                lbSettings.Properties.EnableClientSideAPI = true;
+                ASPxSummaryItem summaryItem1 = c.Grid.TotalSummary.First(i => i.Tag == (fieldName + "_Sum"));
+                lbSettings.Text = decimal.Parse(c.Grid.GetTotalSummaryValue(summaryItem1).ToString()).ToString("#,###.00");
+
+                lbSettings.CustomJSProperties = (sender, e) =>
+                {
+                    e.Properties["cpValue"] = c.Grid.GetTotalSummaryValue(summaryItem1).ToString();
+                };
+
+
+            }).Render();
+        });
+
+    });
+
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Description";
+        column.Name = "Description";
+        column.Caption = "Description";
+
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 200;
+        //column.ReadOnly = true;
+        column.Settings.AllowSort = DefaultBoolean.False;
+
+
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+
+
+
+        if (ViewBag.ReadOnly)
+        {
+            column.PropertiesEdit.Style.BackColor = System.Drawing.Color.Lavender;
+            column.CellStyle.BackColor = System.Drawing.Color.Lavender;
+            column.ReadOnly = true;
+        }
+
+    });
+
+
+    settings.CellEditorInitialize = (s, e) =>
+    {
+        ASPxEdit editor = (ASPxEdit)e.Editor;
+        editor.ValidationSettings.Display = Display.Dynamic;
+    };
+
+
+    settings.Settings.ShowFooter = true;
+
+    settings.ClientSideEvents.BeginCallback = "gvPaymentInApDetailOnBeginCallback";
+    settings.ClientSideEvents.EndCallback = "gvPaymentInApDetailOnEndCallback";
+
+    settings.ClientSideEvents.BatchEditStartEditing = "gvPaymentInApDetailOnBatchEditStartEditing";
+    settings.ClientSideEvents.BatchEditEndEditing = "gvPaymentInApDetailOnBatchEditEndEditing";
+    settings.ClientSideEvents.BatchEditRowValidating = "gvPaymentInApDetailOnBatchEditRowValidating";
+
+    settings.ClientSideEvents.BatchEditConfirmShowing = "function(s, e){ e.cancel = true; }";
+
+    settings.SettingsPager.Mode = GridViewPagerMode.ShowAllRecords;
+
+
+
+
+
+}).Bind(Model).GetHtml()

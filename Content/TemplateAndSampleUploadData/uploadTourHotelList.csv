@@ -1,0 +1,9 @@
+Days,Date,Flight,Destination,Departure Time,Arrival Time,Hotel Address
+1,11/9/2016,SQ 879,Jakarta - Singapore,11/9/2016 8:30,11/10/2016 11:30,Inflight Service
+2,11/10/2016,SQ 901,Singapore -  Beijing,11/10/2016 1:30,11/10/2016 4:30,Hotel One Shine Wen
+3,11/11/2016,SQ 902,Singapore -  Beijing,11/10/2016 1:30,11/10/2016 4:30,Hotel One Shine Wen
+4,11/12/2016,SQ 903,Singapore -  Beijing,11/10/2016 1:30,11/10/2016 4:30,Hotel One Shine Wen
+5,11/13/2016,SQ 904,Singapore -  Beijing,11/10/2016 1:30,11/10/2016 4:30,Hotel One Shine Wen
+6,11/14/2016,SQ 905,Singapore -  Beijing,11/10/2016 1:30,11/10/2016 4:30,Hotel One Shine Wen
+7,11/15/2016,SQ 906,Singapore -  Beijing,11/10/2016 1:30,11/10/2016 4:30,Hotel One Shine Wen
+8,11/16/2016,GA 115,Singapore -  Jakarta,11/16/2016 8:30,11/17/2016 11:30,Home Sweet Home

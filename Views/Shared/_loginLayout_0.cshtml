@@ -1,0 +1,23 @@
+﻿@{
+    Layout = "~/Views/Shared/_rootLogin.cshtml";
+}
+
+@Html.DevExpress().Splitter(settings => {
+    settings.Name = "ASPxSplitter1_Login";
+    settings.Height = System.Web.UI.WebControls.Unit.Percentage(100);
+    settings.Styles.Pane.Paddings.Padding = System.Web.UI.WebControls.Unit.Pixel(0);
+    settings.Styles.Pane.Border.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+    
+    settings.Panes.Add(pane => {
+        pane.Name = "ContentPane_Login";
+        pane.Separator.Visible = DefaultBoolean.True;
+        pane.Separator.SeparatorStyle.Border.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(1);
+        pane.Separator.SeparatorStyle.BorderTop.BorderWidth = System.Web.UI.WebControls.Unit.Pixel(0);
+        pane.SetContent(RenderBody().ToHtmlString()); 
+         
+    });
+
+    settings.SaveStateToCookies = true;
+    
+}).GetHtml() 
+

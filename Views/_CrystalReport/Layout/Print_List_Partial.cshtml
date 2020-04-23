@@ -1,0 +1,124 @@
+﻿@{
+    
+    var controllerName = ViewContext.Controller.ValueProvider.GetValue("controller").RawValue.ToString();
+    long hidden_DocId = 0;
+    if (controllerName == "Bpk")
+    {
+        hidden_DocId = long.Parse(Request["hidden_DocId"]);
+    }
+}
+
+
+@Html.DevExpress().GridView(settings =>
+   {
+       settings.Name = "gvPrintList";
+       settings.KeyFieldName = "Id";
+       settings.CallbackRouteValues = new { Controller = controllerName, Action = "Print_ListPartial" };
+
+       settings.Columns.Add(column =>
+       {
+           column.Caption = "#";
+
+           column.SetDataItemTemplateContent(c =>
+           {
+
+               string valText = (string)DataBinder.Eval(c.DataItem, "LayoutFormCode");
+
+               ViewContext.Writer.Write(
+
+                Html.DevExpress().HyperLink(settingsHL =>
+                {
+                    settingsHL.Name = "Print_Choose_" + c.KeyValue.ToString();
+                    settingsHL.NavigateUrl = "javascript:void(0)";
+                    settingsHL.Properties.Text = "Choose";
+
+                    if (valText == "Bpk_Check")
+                    {
+                        settingsHL.Properties.ClientSideEvents.Click = string.Format("function(s, e) {{ if(cboPrintLayoutCheckNo_{4}.GetValue()==null) {{ alert('Pilih dulu Check No nya'); return;}}  PrintLayoutBpkCheck(s, e, '{0}','{1}','{2}',cboPrintLayoutCheckNo_{3}.GetValue()); }}", c.KeyValue.ToString(), DataBinder.Eval(c.DataItem, "OutputType"), Url.Action("Layout", controllerName), c.KeyValue.ToString(), c.KeyValue.ToString());
+                    }
+                    else
+                    {
+                        settingsHL.Properties.ClientSideEvents.Click = string.Format("function(s, e) {{ PrintLayout(s, e, '{0}','{1}','{2}'); }}", c.KeyValue.ToString(), DataBinder.Eval(c.DataItem, "OutputType"), Url.Action("Layout", controllerName));
+                    }
+                }).GetHtml()
+
+
+            );
+           });
+           column.SetHeaderTemplateContent(c =>
+           {
+               ViewContext.Writer.Write(
+                  "#Action#"
+               );
+           });
+
+           column.Settings.AllowDragDrop = DefaultBoolean.False;
+           column.Settings.AllowSort = DefaultBoolean.False;
+           column.Width = 70;
+       });
+
+       settings.Settings.ShowFilterRow = true;
+       settings.Settings.ShowFilterRowMenu = true;
+
+       settings.Columns.Add("Id", "Id").Visible = false;
+       settings.Columns.Add("LayoutName", "Layout Name");
+
+       if (controllerName == "Bpk")
+       {
+           settings.Columns.Add(column =>
+           {
+               column.FieldName = "LayoutFormCode";
+               column.Name = "LayoutFormCode";
+               column.Caption = "Cheque No";
+               column.Settings.AllowSort = DefaultBoolean.False;
+               column.Settings.AllowAutoFilter = DefaultBoolean.False;
+               //column.ReadOnly = true;
+               column.ColumnType = MVCxGridViewColumnType.TextBox;
+               column.Width = 150;
+
+               column.SetDataItemTemplateContent(c =>
+               {
+
+                   string valText = (string)DataBinder.Eval(c.DataItem, "LayoutFormCode");
+
+                   if (valText == "Bpk_Check")
+                   {
+                       ViewContext.Writer.Write(
+
+                           Html.DevExpress().ComboBox(settings1 =>
+                           {
+                               settings1.Name = "cboPrintLayoutCheckNo_" + c.KeyValue.ToString();
+                               settings1.Properties.DropDownStyle = DropDownStyle.DropDownList;
+                               settings1.ShowModelErrors = true;
+                               //settings1.ReadOnly = ViewBag.ReadOnly;
+                               settings1.Properties.TextField = "CheckNo";
+                               settings1.Properties.ValueField = "DetId";
+                               settings1.Properties.ValueType = typeof(string);
+                               settings1.Properties.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+
+
+                               //settings1.Properties.Columns.Add("Code", "Code").Width = 20;
+                               //settings1.Properties.Columns.Add("Name", "Name").Width = 150;
+
+                               //settings1.Properties.TextFormatString = "{0}";
+
+                               settings1.ShowModelErrors = true;
+                               settings1.Width = 200;
+                               settings1.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                               settings1.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.Lavender;
+                               settings1.Properties.ValidationSettings.Display = Display.Dynamic;
+                           }).BindList(Models._Utils.GeneralGetList.GetBpkChecks(hidden_DocId)).GetHtml()
+
+                       );
+                   }
+
+               });
+
+           });
+       }
+
+       string additionParam = "";
+       additionParam = " e.customArgs['hidden_DocId']=Id.GetValue(); ";
+       settings.ClientSideEvents.BeginCallback = string.Format("function(s, e) {{ {0} }}", additionParam);
+
+   }).Bind(Models._Utils.Rpt.GetPrintLayouts(controllerName, (int)Session["userId"])).GetHtml()

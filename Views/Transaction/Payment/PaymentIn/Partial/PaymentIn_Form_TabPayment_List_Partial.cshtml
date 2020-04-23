@@ -1,0 +1,460 @@
+﻿@using Models;
+
+@model Models.Transaction.PaymentIn.PaymentInModel
+
+@Html.DevExpress().FormLayout(settings =>
+{
+    settings.Name = "formPayment";
+    settings.EncodeHtml = false;
+    settings.Width = Unit.Percentage(98);
+    settings.AlignItemCaptionsInAllGroups = true;
+    settings.ShowItemCaptionColon = false;
+
+    var groupItem = settings.Items.AddGroupItem(itemSettings =>
+    {
+        itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
+        itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
+    });
+
+
+    groupItem.Items.AddTabbedGroupItem(group =>
+    {
+        //group.ColSpan = 2;
+        group.Name = "TabPayment";
+        group.Width = Unit.Percentage(100);
+        group.Height = Unit.Percentage(100);
+        group.PageControl.ContentStyle.Paddings.Padding = 3;
+        group.PageControl.ContentStyle.Paddings.PaddingTop = 0;
+
+        //1 Cash
+        group.Items.Add(item =>
+        {
+            item.Name = "TabCash";
+            item.Caption = "Cash "; 
+            item.SetNestedContent(() =>
+            {
+                @Html.DevExpress().FormLayout(settingtab =>
+                {
+                    settingtab.Name = "formLayoutTabCash";
+                    settingtab.EncodeHtml = false;
+
+                    settingtab.Width = Unit.Percentage(100);
+                    settingtab.AlignItemCaptionsInAllGroups = true;
+                    settingtab.ShowItemCaptionColon = false;
+
+                    var groupItemtab = settingtab.Items.AddGroupItem(itemSettings =>
+                    {
+                        itemSettings.Caption = "";
+                        itemSettings.ShowCaption = DefaultBoolean.False;
+                        itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
+                        itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
+                        itemSettings.ColCount = 1;
+
+
+
+                    });
+
+                    var groupItem_Col1 = groupItemtab.Items.AddGroupItem(itemSettings =>
+                    {
+
+                        itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Top;
+                        itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
+                        itemSettings.ShowCaption = DefaultBoolean.False;
+                        itemSettings.ColCount = 1;
+                        itemSettings.Width = 400;
+                    });
+
+
+                    groupItem_Col1.Items.Add(itemSettings =>
+                    {
+                        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
+                        itemSettings.Caption = "Cash Account";
+                        itemSettings.FieldName = "CashCoaCode";
+                        itemSettings.ClientVisible = false;
+
+                        var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+                        txt.Name = "CashCoaCode";
+                        txt.ReadOnly = true;
+                        txt.ShowModelErrors = true;
+                        txt.ControlStyle.CssClass = "editor";
+                        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.Lavender;
+                    });
+
+
+                    groupItem_Col1.Items.Add(itemSettings =>
+                    {
+                        itemSettings.Caption = "Cash Account";
+
+                    })
+                   .SetNestedContent(() =>
+                   {
+
+                       Html.DevExpress().ComboBoxFor(i => i.CashCoaName, cbo =>
+                       {
+                           cbo.Name = "CashCoaName";
+                           cbo.ShowModelErrors = true;
+                           cbo.ReadOnly = true;
+                           cbo.Width = 300;
+                           cbo.Properties.DropDownStyle = DropDownStyle.DropDown;
+
+                           cbo.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.Lavender;
+                           cbo.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                           cbo.Properties.ValidationSettings.Display = Display.Dynamic;
+
+                           cbo.Properties.DropDownButton.Visible = false;
+
+                           if (!ViewBag.ReadOnly)
+                           {
+                               cbo.Properties.ButtonStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+
+                               EditButton lookUpButton = new EditButton();
+                               lookUpButton.Text = "";
+                               lookUpButton.ToolTip = "Look up";
+                               lookUpButton.Image.Url = "~/Content/Images/button/b_find.png";
+
+                               EditButton clearButton = new EditButton();
+                               clearButton.Text = "";
+                               clearButton.ToolTip = "Clear";
+                               clearButton.Image.Url = "~/Content/Images/button/b_clear.png";
+
+                               cbo.Properties.Buttons.Add(lookUpButton);
+                               cbo.Properties.Buttons.Add(clearButton);
+                               cbo.Properties.ClientSideEvents.ButtonClick = "function(s, e){ BtnCflCoaCashPopupListOnClick(s,e); }";
+                           }
+
+                       }).Render();
+
+                   });
+
+                    groupItem_Col1.Items.Add(itemSettings =>
+                    {
+                        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.SpinEdit;
+                        itemSettings.Caption = "Total Cash";
+                        itemSettings.FieldName = "CashAmountTc";
+
+                        var txt = (SpinEditSettings)itemSettings.NestedExtensionSettings;
+                        txt.Name = "CashAmountTc";
+                        txt.ShowModelErrors = true;
+                        txt.ControlStyle.CssClass = "editor";
+                        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.Lavender;
+                        txt.Width = 150;
+                        txt.Properties.NumberType = SpinEditNumberType.Float;
+                        txt.Properties.DisplayFormatString = "#,###.00";
+                        txt.ControlStyle.HorizontalAlign = HorizontalAlign.Right;
+                        txt.Properties.AllowMouseWheel = false;
+
+                        txt.Properties.ClientSideEvents.ValueChanged = "CashAmountTcOnValueChanged";
+
+                        txt.ReadOnly = ViewBag.ReadOnly;
+                    });
+
+
+                }).GetHtml();
+            });
+        });
+
+        //2 Credit Card
+        group.Items.Add(item =>
+        {
+            item.Name = "TabCc";
+            item.Caption = "Credit Card "; 
+            item.SetNestedContent(() =>
+            {
+                ViewContext.Writer.Write(
+                    Html.Partial("Partial/PaymentIn_Form_TabCc_List_Partial", Model.ListCc_)
+                );
+            });
+        });
+
+
+        //4 Bank Transfer
+        group.Items.Add(item =>
+        {
+            item.Name = "TabTransfer";
+            item.Caption = "Bank Transfer";
+            item.SetNestedContent(() =>
+            {
+                @Html.DevExpress().FormLayout(settingtab =>
+                {
+                    settingtab.Name = "formLayoutTabTransfer";
+                    settingtab.EncodeHtml = false;
+
+                    settingtab.Width = Unit.Percentage(100);
+                    settingtab.AlignItemCaptionsInAllGroups = true;
+                    settingtab.ShowItemCaptionColon = false;
+
+                    var groupItemtab = settingtab.Items.AddGroupItem(itemSettings =>
+                    {
+                        itemSettings.Caption = "";
+                        itemSettings.ShowCaption = DefaultBoolean.False;
+                        itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
+                        itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
+                        itemSettings.ColCount = 1;
+
+
+                    });
+
+                    var groupItem_Col1 = groupItemtab.Items.AddGroupItem(itemSettings =>
+                    {
+
+                        itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Top;
+                        itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
+                        itemSettings.ShowCaption = DefaultBoolean.False;
+                        itemSettings.ColCount = 1;
+                    });
+
+
+
+                    groupItem_Col1.Items.Add(itemSettings =>
+                    {
+                        itemSettings.Name = "grpTransferCoaCode";
+                        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
+                        itemSettings.Caption = "Bank Transfer Account";
+                        itemSettings.FieldName = "TransferCoaCode";
+                        itemSettings.ClientVisible = false;
+
+                        var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+                        txt.Name = "TransferCoaCode";
+                        txt.ReadOnly = true;
+                        txt.ShowModelErrors = true;
+                        txt.ControlStyle.CssClass = "editor";
+                        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.Lavender;
+                    });
+
+                    groupItem_Col1.Items.Add(itemSettings =>
+                    {
+                        itemSettings.Name = "grpTransferCoaName";
+                        itemSettings.Caption = "Bank Transfer Account";
+
+                    })
+                  .SetNestedContent(() =>
+                  {
+
+                      Html.DevExpress().ComboBoxFor(i => i.TransferCoaName, cbo =>
+                      {
+                          cbo.Name = "TransferCoaName";
+                          cbo.ShowModelErrors = true;
+                          cbo.ReadOnly = true;
+                          cbo.Width = 300;
+                          cbo.Properties.DropDownStyle = DropDownStyle.DropDown;
+
+                          cbo.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.Lavender;
+                          cbo.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                          cbo.Properties.ValidationSettings.Display = Display.Dynamic;
+
+                          cbo.Properties.DropDownButton.Visible = false;
+
+                          if (!ViewBag.ReadOnly)
+                          {
+                              cbo.Properties.ButtonStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+
+                              EditButton lookUpButton = new EditButton();
+                              lookUpButton.Text = "";
+                              lookUpButton.ToolTip = "Look up";
+                              lookUpButton.Image.Url = "~/Content/Images/button/b_find.png";
+
+                              EditButton clearButton = new EditButton();
+                              clearButton.Text = "";
+                              clearButton.ToolTip = "Clear";
+                              clearButton.Image.Url = "~/Content/Images/button/b_clear.png";
+
+                              cbo.Properties.Buttons.Add(lookUpButton);
+                              cbo.Properties.Buttons.Add(clearButton);
+                              cbo.Properties.ClientSideEvents.ButtonClick = "function(s, e){ BtnCflCoaTransferPopupListOnClick(s,e); }";
+
+                          }
+
+                      }).Render();
+
+                  });
+
+
+                    groupItem_Col1.Items.Add(itemSettings =>
+                    {
+                        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.SpinEdit;
+                        itemSettings.Caption = "Total Bank Transfer";
+                        itemSettings.FieldName = "TransferAmountTc";
+
+                        var txt = (SpinEditSettings)itemSettings.NestedExtensionSettings;
+                        txt.Name = "TransferAmountTc";
+                        txt.ShowModelErrors = true;
+                        txt.ControlStyle.CssClass = "editor";
+                        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.Lavender;
+                        txt.Width = 150;
+                        txt.Properties.NumberType = SpinEditNumberType.Float;
+                        txt.Properties.DisplayFormatString = "#,###.00";
+                        txt.ControlStyle.HorizontalAlign = HorizontalAlign.Right;
+                        txt.Properties.AllowMouseWheel = false;
+
+                        txt.Properties.ClientSideEvents.ValueChanged = "TransferAmountTcOnValueChanged";
+
+                        txt.ReadOnly = ViewBag.ReadOnly;
+                    });
+
+
+                    groupItem_Col1.Items.Add(itemSettings =>
+                    {
+                        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.DateEdit;
+                        itemSettings.Caption = "Transfer Date";
+                        itemSettings.FieldName = "TransferDate";
+                        //itemSettings.ClientVisible = false;
+
+                        var txt = (DateEditSettings)itemSettings.NestedExtensionSettings;
+                        txt.Name = "TransferDate";
+                        txt.ShowModelErrors = true;
+
+                        txt.ControlStyle.CssClass = "editor";
+                        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.Lavender;
+                        txt.Properties.NullText = "dd/MM/yyyy";
+                        txt.Properties.EditFormat = EditFormat.Custom;
+                        txt.Properties.EditFormatString = "dd/MM/yyyy";
+                        txt.Properties.DisplayFormatInEditMode = true;
+
+                        txt.Width = 100;
+                        txt.Properties.ClientSideEvents.ParseDate = "function (s,e){ { ParseDateEdit(s,e); } }";
+
+                        txt.ReadOnly = ViewBag.ReadOnly;
+                    });
+
+                    groupItem_Col1.Items.Add(itemSettings =>
+                    {
+                        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
+                        itemSettings.Caption = "Transfer Ref No<span id='TransferRefNo__Mandatory' class='dxflRequired_Metropolis'></span>";
+                        itemSettings.FieldName = "TransferRefNo";
+
+                        var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+                        txt.Name = "TransferRefNo";
+                        //txt.ReadOnly = true;// (Model.FormMode == Models.FormModeEnum.New) ? false : true;
+                        txt.ShowModelErrors = true;
+                        txt.ControlStyle.CssClass = "editor";
+                        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.Lavender;
+
+                        txt.ReadOnly = ViewBag.ReadOnly;
+                    });
+
+
+                }).GetHtml();
+            });
+        });
+
+
+        //5 Cheque
+        group.Items.Add(item =>
+        {
+            item.Name = "TabCheck";
+            item.Caption = "Cheque ";
+            item.SetNestedContent(() =>
+            {
+                @Html.DevExpress().FormLayout(settingtab =>
+                {
+                    settingtab.Name = "formLayoutTabCheck";
+                    settingtab.EncodeHtml = false;
+
+                    settingtab.Width = Unit.Percentage(100);
+                    settingtab.AlignItemCaptionsInAllGroups = true;
+                    settingtab.ShowItemCaptionColon = false;
+
+                    var groupItemtab = settingtab.Items.AddGroupItem(itemSettings =>
+                    {
+                        itemSettings.Caption = "";
+                        itemSettings.ShowCaption = DefaultBoolean.False;
+                        itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
+                        itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
+                        itemSettings.ColCount = 1;
+
+
+                    });
+
+                    var groupItem_Col1 = groupItemtab.Items.AddGroupItem(itemSettings =>
+                    {
+
+                        itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Top;
+                        itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
+                        itemSettings.ShowCaption = DefaultBoolean.False;
+                        itemSettings.ColCount = 1;
+                    });
+
+
+                    groupItem_Col1.Items.Add(itemSettings =>
+                    {
+                        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
+                        itemSettings.Caption = "Cheque Account";
+                        itemSettings.FieldName = "CheckCoaCode";
+                        itemSettings.ClientVisible = false;
+
+                        var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+                        txt.Name = "CheckCoaCode";
+                        txt.ReadOnly = true;
+                        txt.ShowModelErrors = true;
+                        txt.ControlStyle.CssClass = "editor";
+                        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.Lavender;
+                    });
+
+                    groupItem_Col1.Items.Add(itemSettings =>
+                    {
+                        itemSettings.Caption = "Cheque Account";
+                        itemSettings.ClientVisible = false;
+
+                    })
+                  .SetNestedContent(() =>
+                  {
+
+                      Html.DevExpress().ComboBoxFor(i => i.CheckCoaName, cbo =>
+                      {
+                          cbo.Name = "CheckCoaName";
+                          cbo.ShowModelErrors = true;
+                          cbo.ReadOnly = true;
+                          cbo.Width = 300;
+                          cbo.Properties.DropDownStyle = DropDownStyle.DropDown;
+
+                          cbo.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.Lavender;
+                          cbo.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                          cbo.Properties.ValidationSettings.Display = Display.Dynamic;
+
+                          cbo.Properties.DropDownButton.Visible = false;
+
+                          cbo.Properties.ButtonStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+                          EditButton lookUpButton = new EditButton();
+                          lookUpButton.Text = "";
+                          lookUpButton.Image.Url = "~/Content/Images/button/b_find.png";
+                          cbo.Properties.Buttons.Add(lookUpButton);
+                          cbo.Properties.ClientSideEvents.ButtonClick = "BtnCflCoaCheckPopupListOnClick";
+
+
+                      }).Render();
+
+                  });
+
+                    groupItem_Col1.Items.Add(itemSettings =>
+                    {
+                        itemSettings.Caption = "";
+                        itemSettings.ShowCaption = DefaultBoolean.False;
+
+                    })
+                    .SetNestedContent(() =>
+                    {
+
+                        ViewContext.Writer.Write(
+                                    Html.Partial("Partial/PaymentIn_Form_TabCheck_List_Partial", Model.ListCheck_)
+                                );
+
+                    });
+
+                }).GetHtml();
+            });
+        });
+
+        
+    });
+
+
+
+
+}).GetHtml()

@@ -1,0 +1,98 @@
+﻿@using Models; 
+@using Models._Utils; 
+ 
+@{
+    GridViewModel viewModel = Model;
+    
+    var cpGvFind_FilterExpression = GetSqlFromGridViewModelState.getSqlCriteria(viewModel);
+    var cpGvFind_SortExpression = GetSqlFromGridViewModelState.getSqlSort(viewModel);
+    var cpGvFind_PageIndex = viewModel.Pager.PageIndex;
+    var cpGvFind_PageSize = viewModel.Pager.PageSize;
+}
+
+
+@Html.DevExpress().GridView(settings=>
+   {
+       settings.Name ="gvUserAlertList";
+       settings.KeyFieldName = "Tp_UserAlert___.Id";
+       settings.CallbackRouteValues = new { Controller = "_Alert", Action = "ListPartial" };
+
+       //settings.Width = Unit.Percentage(100);
+       //settings.Settings.ShowFilterRow = true;
+       //settings.Settings.ShowFilterRowMenu = true;  
+
+       settings.Columns.Add(column =>
+     {
+         column.FieldName = "Tm_Alert___.AlertName";
+         column.Caption = "Name";
+
+         column.SetDataItemTemplateContent(c =>
+         {
+
+             ViewContext.Writer.Write(
+
+              Html.DevExpress().HyperLink(settingsHL =>
+              {
+                  settingsHL.Name = "Choose_" + DataBinder.Eval(c.DataItem, "Tp_UserAlert___.Id");
+                  settingsHL.NavigateUrl = "javascript:void(0)";
+                  settingsHL.Properties.Text = DataBinder.Eval(c.DataItem, "Tm_Alert___.AlertName").ToString();
+
+                  settingsHL.Properties.ClientSideEvents.Click = string.Format("function(s, e) {{ OnClickDetailAlert( {0}); }}", DataBinder.Eval(c.DataItem, "Tm_Alert___.Id"));
+              }).GetHtml() 
+
+          );
+         });
+
+     });
+
+       settings.Columns.Add("Tp_UserAlert___.Id", "Id").Visible = false;
+       settings.Columns.Add("Tm_Alert___.Id", "Id").Visible = false;
+
+       
+       settings.Columns.Add("Tp_UserAlert___.LastShowTime", "Time", MVCxGridViewColumnType.DateEdit).PropertiesEdit.DisplayFormatString = "dd/MM/yyyy hh:mm:ss"; 
+       settings.SettingsPager.Position = PagerPosition.Bottom;
+       settings.SettingsPager.FirstPageButton.Visible = true;
+       settings.SettingsPager.LastPageButton.Visible = true;
+       settings.SettingsPager.AlwaysShowPager = true; 
+
+   
+       if (cpGvFind_PageIndex == 0)
+       {
+           settings.SettingsPager.PageSizeItemSettings.Visible = true;
+       }
+      
+       
+       settings.SettingsPager.PageSizeItemSettings.Items = new string[] { "10", "20", "50" };
+
+       settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+       settings.Settings.VerticalScrollableHeight = 400;
+
+       settings.SettingsBehavior.AllowFocusedRow = true;
+       //settings.Settings.ShowFilterBar = GridViewStatusBarMode.Visible; 
+       
+       settings.CustomBindingRouteValuesCollection.Add(
+           GridViewOperationType.Paging,
+           new { Controller = "_Alert", Action = "ListPaging" }
+       ); 
+       
+       settings.CustomBindingRouteValuesCollection.Add(
+           GridViewOperationType.Filtering,
+           new { Controller = "_Alert", Action = "ListFiltering" }
+       );
+
+       settings.CustomBindingRouteValuesCollection.Add(
+           GridViewOperationType.Sorting,
+           new { Controller = "_Alert", Action = "ListSorting" }
+       ); 
+       
+
+       settings.CustomJSProperties = (sender, e) =>
+       {
+           e.Properties["cpGvFind_FilterExpression"] = cpGvFind_FilterExpression;
+           e.Properties["cpGvFind_SortExpression"] =cpGvFind_SortExpression;
+           e.Properties["cpGvFind_PageIndex"] = cpGvFind_PageIndex;
+           e.Properties["cpGvFind_PageSize"] = cpGvFind_PageSize;
+       }; 
+       
+      
+   }).BindToCustomData(Model).GetHtml()

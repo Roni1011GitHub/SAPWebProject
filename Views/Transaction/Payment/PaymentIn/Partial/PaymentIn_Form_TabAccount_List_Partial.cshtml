@@ -1,0 +1,262 @@
+﻿@using Models;
+
+@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gvPaymentInAccountDetail";
+    settings.KeyFieldName = "DetId";
+    settings.Width = Unit.Percentage(100);
+
+    settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
+    settings.Settings.VerticalScrollableHeight = 200;
+    settings.Settings.VerticalScrollBarMode = ScrollBarMode.Auto;
+
+    settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
+    settings.SettingsEditing.BatchEditSettings.EditMode = GridViewBatchEditMode.Row;
+    settings.SettingsEditing.BatchEditSettings.StartEditAction = GridViewBatchStartEditAction.Click;
+    settings.SettingsEditing.NewItemRowPosition = GridViewNewItemRowPosition.Bottom;
+
+
+    settings.CommandColumn.Visible = !ViewBag.ReadOnly;
+
+    settings.CommandColumn.ShowDeleteButton = false;
+    settings.CommandColumn.ShowNewButtonInHeader = true;
+    settings.Enabled = true;
+
+    settings.CommandColumn.Width = 50;
+
+    settings.Settings.ShowStatusBar = GridViewStatusBarMode.Hidden;
+
+
+    GridViewCommandColumnCustomButton customButton = new GridViewCommandColumnCustomButton() { ID = "deleteButton", Text = "Delete" };
+    settings.CommandColumn.CustomButtons.Add(customButton);
+
+    settings.ClientSideEvents.CustomButtonClick = "gvPaymentInAccountDetailOnCustomButtonClick";
+
+
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "CoaCode";
+        column.Name = "CoaCode";
+        column.Caption = "COA Code";
+
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 0;
+        column.ReadOnly = true;
+        column.Settings.AllowSort = DefaultBoolean.False;
+
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.Lavender;
+        column.CellStyle.BackColor = System.Drawing.Color.Lavender;
+        column.CellStyle.ForeColor = System.Drawing.Color.Black;
+        //column.EditFormSettings.Visible = DefaultBoolean.False;
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.ClientInstanceName = "gvPaymentInAccountDetail_CoaCode";
+
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "CoaName";
+        column.Name = "CoaName";
+        column.Caption = "COA Name";
+        column.Settings.AllowSort = DefaultBoolean.False;
+
+
+        column.Width = 300;
+
+        column.SetEditItemTemplateContent(c =>
+        {
+
+            ViewContext.Writer.Write(
+                 Html.Partial("Partial/PaymentIn_AccountCoaNameComboBox_Partial")
+             );
+
+
+        });
+
+    });
+
+
+
+
+    //settings.Columns.Add(column =>
+    //{
+    //    column.FieldName = "BranchCode";
+    //    column.Name = "BranchCode";
+    //    column.Caption = "Branch";
+    //    column.ColumnType = MVCxGridViewColumnType.ComboBox;
+    //    column.Settings.AllowSort = DefaultBoolean.False;
+    //    column.Width = 70;
+
+    //    var cbo = column.PropertiesEdit as ComboBoxProperties;
+    //    cbo.DataSource = Models._Utils.GeneralGetList.GetDtAuthBranchCodeByUserId((int)Session["userId"]);
+    //    cbo.TextField = "PrcCode";
+    //    cbo.ValueField = "PrcCode";
+    //    cbo.ValueType = typeof(string);
+
+    //    cbo.Columns.Add("GrpCode", "Branch Code");
+    //    cbo.Columns.Add("PrcName", "Branch Name");
+    //    cbo.TextFormatString = "{0}";
+
+
+    //    cbo.DropDownStyle = DropDownStyle.DropDownList;
+    //    cbo.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+    //    cbo.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+
+
+    //});
+
+    //settings.Columns.Add(column =>
+    //{
+    //    column.FieldName = "InternalDeptCode";
+    //    column.Name = "InternalDeptCode";
+    //    column.Caption = "Internal Dept";
+    //    column.ColumnType = MVCxGridViewColumnType.ComboBox;
+    //    column.Settings.AllowSort = DefaultBoolean.False;
+    //    column.Width = 100;
+
+    //    var cbo = column.PropertiesEdit as ComboBoxProperties;
+    //    cbo.DataSource = Models._Utils.GeneralGetList.GetInternalDepts();
+    //    cbo.TextField = "OcrCode";
+    //    cbo.ValueField = "OcrCode";
+    //    cbo.ValueType = typeof(string);
+
+    //    cbo.Columns.Add("OcrCode", "Dept Code");
+    //    cbo.Columns.Add("OcrName", "Dept Name");
+    //    cbo.TextFormatString = "{0}";
+
+
+    //    cbo.DropDownStyle = DropDownStyle.DropDownList;
+    //    cbo.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+    //    cbo.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+
+
+    //});
+
+    //settings.Columns.Add(column =>
+    //{
+    //    column.FieldName = "CustomerType";
+    //    column.Name = "CustomerType";
+    //    column.Caption = "Customer Type";
+    //    column.ColumnType = MVCxGridViewColumnType.ComboBox;
+    //    column.Settings.AllowSort = DefaultBoolean.False;
+    //    column.Width = 100;
+
+    //    var cbo = column.PropertiesEdit as ComboBoxProperties;
+    //    cbo.DataSource = Models._Utils.GeneralGetList.GetCustomerTypes();
+    //    cbo.TextField = "OcrCode";
+    //    cbo.ValueField = "OcrCode";
+    //    cbo.ValueType = typeof(string);
+
+    //    cbo.Columns.Add("OcrCode", "Code");
+    //    cbo.Columns.Add("OcrName", "Name");
+    //    cbo.TextFormatString = "{0}";
+
+
+    //    cbo.DropDownStyle = DropDownStyle.DropDownList;
+    //    cbo.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+    //    cbo.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+
+
+    //});
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "AmountTc";
+        column.Name = "AmountTc";
+        column.Caption = "Amount";
+        column.HeaderStyle.HorizontalAlign = HorizontalAlign.Right;
+        column.Width = 150;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        //column.ReadOnly = true; 
+
+        //column.PropertiesEdit.Style.BackColor = System.Drawing.Color.Lavender;
+        //column.CellStyle.BackColor = System.Drawing.Color.Lavender;
+        //column.CellStyle.ForeColor = System.Drawing.Color.Black;
+        //column.EditFormSettings.Visible = DefaultBoolean.False;
+        //column.PropertiesEdit.EnableClientSideAPI = false;
+
+        column.ColumnType = MVCxGridViewColumnType.SpinEdit;
+        var txt = column.PropertiesEdit as SpinEditProperties;
+        txt.NumberType = SpinEditNumberType.Float;
+        txt.DisplayFormatString = "#,###.00";
+        txt.DisplayFormatInEditMode = true;
+        txt.AllowMouseWheel = false;
+
+
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.Style.HorizontalAlign = HorizontalAlign.Right;
+        txt.ReadOnlyStyle.BackColor = System.Drawing.Color.Lavender;
+
+        ASPxSummaryItem summaryItem = new ASPxSummaryItem(column.FieldName, DevExpress.Data.SummaryItemType.Sum);
+        summaryItem.Tag = column.FieldName + "_Sum";
+        summaryItem.DisplayFormat = "{0}";
+        settings.TotalSummary.Add(summaryItem);
+
+        column.SetFooterTemplateContent(c =>
+        {
+            Html.DevExpress().Label(lbSettings =>
+            {
+                string fieldName = (c.Column as GridViewDataColumn).FieldName;
+                lbSettings.Name = "gvPaymentInAccountDetailLabel" + fieldName + "Sum";
+                lbSettings.Properties.EnableClientSideAPI = true;
+                ASPxSummaryItem summaryItem1 = c.Grid.TotalSummary.First(i => i.Tag == (fieldName + "_Sum"));
+                lbSettings.Text = decimal.Parse(c.Grid.GetTotalSummaryValue(summaryItem1).ToString()).ToString("#,###.00");
+
+                lbSettings.CustomJSProperties = (sender, e) =>
+                {
+                    e.Properties["cpValue"] = c.Grid.GetTotalSummaryValue(summaryItem1).ToString();
+                };
+
+            }).Render();
+        });
+
+
+
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "Description";
+        column.Name = "Description";
+        column.Caption = "Description";
+
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 300;
+        //column.ReadOnly = true;
+        column.Settings.AllowSort = DefaultBoolean.False;
+
+        //column.PropertiesEdit.Style.BackColor = System.Drawing.Color.Lavender;
+        //column.CellStyle.BackColor = System.Drawing.Color.Lavender;
+        //column.CellStyle.ForeColor = System.Drawing.Color.Black;
+        //column.EditFormSettings.Visible = DefaultBoolean.False;
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+
+    });
+
+    settings.CellEditorInitialize = (s, e) =>
+    {
+        ASPxEdit editor = (ASPxEdit)e.Editor;
+        editor.ValidationSettings.Display = Display.Dynamic;
+    };
+
+
+    settings.Settings.ShowFooter = true;
+
+    settings.ClientSideEvents.BatchEditStartEditing = "gvPaymentInAccountDetailOnBatchEditStartEditing";
+    settings.ClientSideEvents.BatchEditEndEditing = "gvPaymentInAccountDetailOnBatchEditEndEditing";
+    settings.ClientSideEvents.BatchEditRowValidating = "gvPaymentInAccountDetailOnBatchEditRowValidating";
+
+
+    settings.SettingsPager.Mode = GridViewPagerMode.ShowAllRecords;
+
+
+
+
+}).Bind(Model).GetHtml()

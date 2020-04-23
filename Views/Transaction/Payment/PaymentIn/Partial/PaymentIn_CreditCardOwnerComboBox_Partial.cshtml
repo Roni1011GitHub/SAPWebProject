@@ -1,0 +1,29 @@
+﻿ 
+@Html.DevExpress().ComboBox(
+    settings =>
+    {
+        settings.Name = "gvPaymentInCcDetail_CcNo";
+        settings.Properties.ClientInstanceName = "gvPaymentInCcDetail_CcNo";
+        settings.Properties.DropDownWidth = 350;
+        settings.Properties.DropDownStyle = DropDownStyle.DropDown;
+       
+        settings.ShowModelErrors = true;
+        settings.Width = 150;
+        //settings.ReadOnly = true;
+
+        //settings.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.Lavender;
+       
+        // Hide the default DropDown button
+        settings.Properties.DropDownButton.Visible = false;
+        settings.Properties.ButtonStyle.BackColor = System.Drawing.Color.FromName("#E0E0E0");
+        EditButton lookUpButton = new EditButton();
+        lookUpButton.Text = "";
+        lookUpButton.Image.Url = "~/Content/Images/button/b_find.png";
+        settings.Properties.Buttons.Add(lookUpButton);
+        settings.Properties.ClientSideEvents.ButtonClick = "function(s,e){{ CreditCardOwnerOnButtonClick(s,e); }}";
+        settings.Properties.ClientSideEvents.ValueChanged = "function(s,e){{ gvPaymentInCcDetailCcNo_OnValueChanged(s,e); }}";
+        
+    }
+   
+    ).GetHtml()
+

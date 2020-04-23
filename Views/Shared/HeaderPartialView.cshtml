@@ -1,0 +1,40 @@
+@if (false)
+{ 
+<script src="~/Scripts/ASPxScriptIntelliSense.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery-2.2.0.intellisense.js"></script>
+}
+
+<div class="headerTop">
+<div class="templateTitle">
+
+
+
+@*<a href="@DevExpressHelper.GetUrl(new { controller = "Home", Action = "Index" })" >
+<img src="~/Content/Images/Travel-Managament-System_Login" height="50px" />
+</a>*@
+
+</div>
+
+
+
+
+@{
+    var controllerName = ViewContext.Controller.ValueProvider.GetValue("controller").RawValue.ToString(); 
+}
+
+<div class="loginControl">
+
+@if (controllerName != "Login")
+{ 
+@: @Html.Partial("LogOnPartialView")
+}
+
+</div>
+</div>
+
+@if ((controllerName != "Login") && (controllerName != "ReportAlert") && (Session["userId"] != null) && (Session["IsPassExpired"] != "Y"))
+{     
+@Html.Partial("~/Views/_Alert/_Alert/Partial/_Alert_Panel_List_Partial.cshtml") 
+
+}
+

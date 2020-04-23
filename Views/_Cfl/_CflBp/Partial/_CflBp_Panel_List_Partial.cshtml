@@ -1,0 +1,167 @@
+﻿@using Models._Cfl
+
+@if (false)
+{ 
+<script src="~/Scripts/ASPxScriptIntelliSense.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery-2.2.0.intellisense.js"></script>
+<script src="~/Scripts/Test/DXR.js"></script> 
+}
+
+ 
+@model Models._Cfl.CflBp_ParamModel
+
+@{
+    GridViewModel viewModel = new GridViewModel();
+    if (ViewBag.viewModel != null)
+    {
+        viewModel = ViewBag.viewModel;
+    } 
+  
+    
+}
+
+@Html.DevExpress().PopupControl(settings =>
+{
+    settings.Name = "cflBpPopupList" + Model.Name;
+    settings.CallbackRouteValues = new { Controller = "_CflBp", Action = "PopupListLoadOnDemandPartial" };
+    settings.CloseAction = CloseAction.OuterMouseClick;
+    settings.Height = Unit.Percentage(100);
+    
+    settings.PopupVerticalAlign = PopupVerticalAlign.Below;
+    settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+
+    settings.CloseAnimationType = AnimationType.Fade;
+    settings.PopupAnimationType = AnimationType.Fade;
+
+    settings.ScrollBars = ScrollBars.Auto;
+
+    settings.ShowFooter = true;
+    settings.AllowDragging = true;
+    settings.AllowResize = true;
+    settings.ShowCollapseButton = true;
+    settings.ShowMaximizeButton = true;
+    settings.ShowRefreshButton = true;
+    settings.FooterText = "";
+    settings.Styles.Footer.Paddings.Padding = 0;
+
+
+    settings.ShowPageScrollbarWhenModal = true;
+
+    //settings.EnableHotTrack = true;
+    //settings.Width = System.Web.UI.WebControls.Unit.Percentage(100);
+
+    settings.LoadContentViaCallback = LoadContentViaCallback.OnFirstShow;
+    settings.PopupElementID = "ShowButton";
+    settings.HeaderText = "Choose BP " + Model.Header;
+
+    settings.SetContent(() =>
+    {
+
+        //Html.DevExpress().HyperLink(settingsHL =>
+        //{
+        //    settingsHL.Name = "gvCflBpList" + Model.Name + "_GvExportTo";
+        //    settingsHL.NavigateUrl = "javascript:void(0)";
+        //    settingsHL.Properties.Text = "Excel";
+        //    settingsHL.Properties.ClientSideEvents.Click = string.Format("function(s, e) {{ GvCflExportTo(gvCflBpList{1}, '{0}'); }}", @Url.Action("ExportTo", "_CflBp"), Model.Name);
+        //    settingsHL.Height = 20;
+        //}).GetHtml();
+        
+        Html.DevExpress().HyperLink(settingsChoose =>
+        {
+            settingsChoose.Name = "cflBpPopupList" + Model.Name + "Cancel";
+            settingsChoose.NavigateUrl = "javascript:void(0)";
+            settingsChoose.Properties.Text = "Cancel";
+            settingsChoose.Height = 20; 
+            settingsChoose.Properties.ClientSideEvents.Click = string.Format("function(s, e) {{ cflBpPopupList{0}.Hide(); }}", Model.Name);
+        }).GetHtml();
+
+        Html.DevExpress().FormLayout(settingtab =>
+        {
+            settingtab.Name = "formLayoutTabCflBpFind" + Model.Name;
+            settingtab.EncodeHtml = false;
+
+            //settingtab.Width = Unit.Percentage(100);
+            settingtab.AlignItemCaptionsInAllGroups = true;
+            settingtab.ShowItemCaptionColon = false;
+
+            var groupItemtab = settingtab.Items.AddGroupItem(itemSettings =>
+            {
+                itemSettings.Caption = "";
+                itemSettings.ShowCaption = DefaultBoolean.False;
+                itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
+                itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
+                itemSettings.ColCount = 1;
+
+
+            });
+
+            var groupItem_Col1 = groupItemtab.Items.AddGroupItem(itemSettings =>
+            {
+
+                itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Top;
+                itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
+                itemSettings.ShowCaption = DefaultBoolean.False;
+                itemSettings.ColCount = 3;
+            }); 
+
+
+            groupItem_Col1.Items.Add(itemSettings =>
+            {
+                itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.CheckBox;
+                itemSettings.Caption = "Current Branch";
+                itemSettings.CaptionSettings.HorizontalAlign = FormLayoutHorizontalAlign.Left;
+                var cb = (CheckBoxSettings)itemSettings.NestedExtensionSettings;
+                cb.Name = "IsFindCflBpCurrentBranch" + Model.Name;
+                cb.ShowModelErrors = true;
+                //cb.Width = 100; 
+
+                cb.ControlStyle.CssClass = "editor";
+                cb.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+                cb.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.Lavender;
+                cb.Checked = true;
+                cb.Properties.ClientSideEvents.CheckedChanged = "function(s,e) {{  gvCflBpList" + Model.Name + ".PerformCallback(); }}";
+                cb.Properties.ValueType = typeof(string);
+                cb.Properties.ValueChecked = "Y";
+                cb.Properties.ValueUnchecked = "N";
+            });
+
+            groupItem_Col1.Items.AddEmptyItem();
+            groupItem_Col1.Items.AddEmptyItem();
+
+
+        }).GetHtml();
+        
+
+        Html.RenderPartial("Partial/_CflBp_List_Partial", viewModel);
+
+    });
+
+    settings.CustomJSProperties = (sender, e) =>
+    {
+        e.Properties["cpPopupFind_CflType"] = Model.Type;
+        e.Properties["cpPopupFind_CflName"] = Model.Name;
+        e.Properties["cpPopupFind_CflHeader"] = Model.Header;
+        e.Properties["cpPopupFind_CflSqlWhere"] = Model.SqlWhere;
+        e.Properties["cpPopupFind_CflIsMulti"] = Model.IsMulti;
+    };
+
+    string additionParam = "";
+    if (Model.Type == "HotelVoucher_Hotel")
+    {
+        additionParam = " e.customArgs['hidden_CflHotelType']=HotelType.GetValue(); ";
+    }
+
+    additionParam += " e.customArgs['hidden_IsFindCurrentBranch']=(ASPxClientCheckBox.Cast('IsFindCflBpCurrentBranch" + Model.Name + "')==null)?'Y':(ASPxClientCheckBox.Cast('IsFindCflBpCurrentBranch" + Model.Name + "').GetStateInput())==null?'Y':IsFindCflBpCurrentBranch" + Model.Name + ".GetValue(); ";
+    
+    settings.PreRender = (sender, e) =>
+    {
+        ASPxPopupControl popup = (ASPxPopupControl)sender;
+        popup.Width = 1000;
+        popup.Height = 600;
+    };
+
+    settings.ClientSideEvents.BeginCallback = string.Format("function(s, e) {{ {0}  e.customArgs['hidden_CflType']=s.cpPopupFind_CflType; e.customArgs['hidden_CflName']=s.cpPopupFind_CflName;  e.customArgs['hidden_CflHeader']=s.cpPopupFind_CflHeader; e.customArgs['hidden_CflSqlWhere']=s.cpPopupFind_CflSqlWhere;e.customArgs['hidden_CflIsMulti']=s.cpPopupFind_CflIsMulti; }}", additionParam);
+    settings.ClientSideEvents.Resize = string.Format("function(s, e) {{ GridviewInPopupAdjustSize(cflBpPopupList{0},gvCflBpList{0},50); }}", Model.Name);
+    settings.ClientSideEvents.EndCallback = string.Format("function(s, e) {{ GridviewInPopupAdjustSize(cflBpPopupList{0},gvCflBpList{0},50); }}", Model.Name);
+
+}).GetHtml()

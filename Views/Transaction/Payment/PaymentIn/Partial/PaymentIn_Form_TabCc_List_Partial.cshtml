@@ -1,0 +1,398 @@
+﻿@using Models;
+
+@{ 
+    var Id = Convert.ToInt64(Request["cbId"]);
+
+    if (ViewBag.Id != null)
+    {
+        Id = ViewBag.Id;
+    }
+
+
+    if (ViewBag.ReadOnly == null)
+    {
+        ViewBag.ReadOnly = false;
+        string status = Models._PetaPoco.DbProvider.dbApp.ExecuteScalar<string>("SELECT TOP 1 T0.Status FROM Tx_PaymentIn T0 WHERE T0.Id=@0", Id);
+        if (status != "Draft")
+        {
+            ViewBag.ReadOnly = true;
+        }
+    }
+    
+}
+
+@Html.DevExpress().GridView(settings =>
+{
+    settings.Name = "gvPaymentInCcDetail";
+    settings.KeyFieldName = "DetId";
+    settings.Width = Unit.Percentage(100);
+
+    settings.Settings.HorizontalScrollBarMode = ScrollBarMode.Auto;
+    settings.Settings.VerticalScrollableHeight = 150;
+    settings.Settings.VerticalScrollBarMode = ScrollBarMode.Auto;
+
+    settings.SettingsEditing.Mode = GridViewEditingMode.Batch;
+    settings.SettingsEditing.BatchEditSettings.EditMode = GridViewBatchEditMode.Row;
+    settings.SettingsEditing.BatchEditSettings.StartEditAction = GridViewBatchStartEditAction.Click;
+    settings.SettingsEditing.NewItemRowPosition = GridViewNewItemRowPosition.Bottom;
+
+
+    settings.CommandColumn.Visible = !ViewBag.ReadOnly;
+
+    settings.CommandColumn.ShowDeleteButton = false;
+    settings.CommandColumn.ShowNewButtonInHeader = true;
+    settings.Enabled = true;
+
+    settings.CommandColumn.Width = 50;
+
+    settings.Settings.ShowStatusBar = GridViewStatusBarMode.Hidden;
+
+
+    GridViewCommandColumnCustomButton customButton = new GridViewCommandColumnCustomButton() { ID = "deleteButton", Text = "Delete" };
+    settings.CommandColumn.CustomButtons.Add(customButton);
+
+    settings.ClientSideEvents.CustomButtonClick = "gvPaymentInCcDetailOnCustomButtonClick";
+
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "CreditCardId";
+        column.Name = "CreditCardId";
+        column.Caption = "Credit Card Id";
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 0;
+        column.ReadOnly = true;
+        column.Settings.AllowSort = DefaultBoolean.False;
+
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.Lavender;
+        column.CellStyle.BackColor = System.Drawing.Color.Lavender;
+        column.CellStyle.ForeColor = System.Drawing.Color.Black;
+        //column.EditFormSettings.Visible = DefaultBoolean.False;
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.ClientInstanceName = "gvPaymentInCcDetail_CreditCardId";
+
+    });
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "CreditCardName";
+        column.Name = "CreditCardName";
+        column.Caption = "CreditCardName";
+        column.ColumnType = MVCxGridViewColumnType.ComboBox;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        column.Width = 200;
+        column.ReadOnly = true;
+
+        if (!ViewBag.ReadOnly)
+        {
+            column.SetEditItemTemplateContent(c =>
+            {
+
+                ViewContext.Writer.Write(
+                     Html.Partial("Partial/PaymentIn_Form_TabCc_CreditCardComboBox_Partial")
+                 );
+
+            });
+        }
+
+
+        if (ViewBag.ReadOnly)
+        {
+            column.PropertiesEdit.Style.BackColor = System.Drawing.Color.Lavender;
+            column.CellStyle.BackColor = System.Drawing.Color.Lavender;
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        }
+    });
+
+     settings.Columns.Add(column =>
+    {
+        column.FieldName = "CcCoaCode";
+        column.Name = "CcCoaCode";
+        column.Caption = "Coa Code";
+        column.ColumnType = MVCxGridViewColumnType.ComboBox;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        column.Width = 120;
+        column.ReadOnly = true;
+
+        if (!ViewBag.ReadOnly)
+        {
+            column.SetEditItemTemplateContent(c =>
+            {
+
+                ViewContext.Writer.Write(
+                     Html.Partial("Partial/PaymentIn_Form_TabCc_CoaComboBox_Partial")
+                 );
+
+            });
+        }
+
+
+        if (ViewBag.ReadOnly)
+        {
+            column.PropertiesEdit.Style.BackColor = System.Drawing.Color.Lavender;
+            column.CellStyle.BackColor = System.Drawing.Color.Lavender;
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        }
+    });
+
+
+    //settings.Columns.Add(column =>
+    //{
+    //    column.FieldName = "CcCoaCode";
+    //    column.Name = "CcCoaCode";
+    //    column.Caption = "Coa Code";
+
+    //    column.ColumnType = MVCxGridViewColumnType.TextBox;
+    //    column.Width = 120;
+    //    column.ReadOnly = true;
+    //    column.Settings.AllowSort = DefaultBoolean.False;
+
+    //    column.PropertiesEdit.Style.BackColor = System.Drawing.Color.Lavender;
+    //    column.CellStyle.BackColor = System.Drawing.Color.Lavender;
+    //    column.CellStyle.ForeColor = System.Drawing.Color.Black;
+    //    //column.EditFormSettings.Visible = DefaultBoolean.False;
+
+    //    var txt = column.PropertiesEdit as TextBoxProperties;
+    //    txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+    //    txt.ClientInstanceName = "gvPaymentInCcDetail_CcCoaCode";
+
+    //});
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "CcCoaName";
+        column.Name = "CcCoaName";
+        column.Caption = "Coa Name";
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 120;
+        column.ReadOnly = true;
+        column.Settings.AllowSort = DefaultBoolean.False;
+
+        column.PropertiesEdit.Style.BackColor = System.Drawing.Color.Lavender;
+        column.CellStyle.BackColor = System.Drawing.Color.Lavender;
+        column.CellStyle.ForeColor = System.Drawing.Color.Black;
+        //column.EditFormSettings.Visible = DefaultBoolean.False;
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.ClientInstanceName = "gvPaymentInCcDetail_CcCoaName";
+
+    });
+
+    // settings.Columns.Add(column =>
+    //{
+    //    column.FieldName = "CreditCardId";
+    //    column.Name = "CreditCardId";
+    //    column.Caption = "Credit Card Name";
+    //    column.ColumnType = MVCxGridViewColumnType.ComboBox;
+    //    column.Settings.AllowSort = DefaultBoolean.False;
+    //    column.Width = 200;
+    //    //column.ReadOnly = true;
+
+    //    var cbo = column.PropertiesEdit as ComboBoxProperties;
+    //    //cbo.DataSource = Models._Utils.GeneralGetList.GetCreditCard();
+    //    cbo.TextField = "Name";
+    //    cbo.ValueField = "Id";
+    //    cbo.ValueType = typeof(int);
+
+
+    //    cbo.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+
+    //    cbo.DropDownStyle = DropDownStyle.DropDown;
+    //    cbo.IncrementalFilteringMode = IncrementalFilteringMode.Contains;
+    //    cbo.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+
+    //    //cbo.ClientSideEvents.ValueChanged = "gvPaymentInCcDetailCreditCardIdOnValueChanged";
+    //    cbo.ClientInstanceName = "gvPaymentInCcDetailCreditCardId";
+
+    //    cbo.DropDownButton.Visible = false;
+
+    //    column.PropertiesEdit.Style.BackColor = System.Drawing.Color.Lavender;
+    //    column.CellStyle.BackColor = System.Drawing.Color.Lavender;
+    //    column.ReadOnly = true;
+
+    //});
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "CcNo_";
+        column.Name = "CcNo_";
+        column.Caption = "Card No";
+
+
+        column.ColumnType = MVCxGridViewColumnType.TextBox;
+        column.Width = 150;
+        //column.ReadOnly = true;
+        column.Settings.AllowSort = DefaultBoolean.False;
+
+
+        var txt = column.PropertiesEdit as TextBoxProperties;
+        txt.DisplayFormatInEditMode = false;
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.ReadOnlyStyle.BackColor = System.Drawing.Color.Lavender;
+        //txt.ClientSideEvents.ValueChanged = "gvPaymentInCcDetailCcNo_OnValueChanged";
+
+
+        //column.SetEditItemTemplateContent(c =>
+        //{
+
+        //    ViewContext.Writer.Write(
+        //         Html.Partial("Partial/PaymentIn_CreditCardOwnerComboBox_Partial")
+        //     );
+
+
+        //});
+
+        if (ViewBag.ReadOnly)
+        {
+            column.PropertiesEdit.Style.BackColor = System.Drawing.Color.Lavender;
+            column.CellStyle.BackColor = System.Drawing.Color.Lavender;
+            column.ReadOnly = true;
+            column.EditFormSettings.Visible = DefaultBoolean.False;
+        }
+
+        if (ViewBag.ReadOnly)
+        {
+            column.SetDataItemTemplateContent(c =>
+            {
+
+                string valText = (string)DataBinder.Eval(c.DataItem, "CcNo_");
+
+                if (!string.IsNullOrEmpty(valText))
+                {
+                    string temp = "**********";
+                    valText = valText + temp;
+
+                    ViewContext.Writer.Write(
+
+                        Html.DevExpress().Label(settingsHL =>
+                        {
+                            settingsHL.Name = "gvPaymentInCcDetail_" + Guid.NewGuid();
+                            settingsHL.Text = valText;
+                        }).GetHtml()
+                    );
+                }
+            });
+        }
+
+    });
+
+
+
+    settings.Columns.Add(column =>
+    {
+
+        column.Caption = "Valid Until";
+        column.Name = "ValidUntilDate";
+        column.FieldName = "ValidUntilDate";
+        column.ColumnType = MVCxGridViewColumnType.DateEdit;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        column.Width = 70;
+        var txt = column.PropertiesEdit as DateEditProperties;
+        //txt.UseMaskBehavior = true;
+        txt.DisplayFormatString = "MM/yyyy";
+        txt.EditFormatString = "MM/yyyy";
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.ValidationSettings.Display = Display.Dynamic;
+
+        txt.DropDownButton.Visible = false;
+
+
+        txt.ClientSideEvents.ParseDate = "function (s,e){ { ParseMonthEdit(s,e); } }";
+        txt.ClientInstanceName = "gvPaymentInCcDetailValidUntilDate";
+        if (ViewBag.ReadOnly)
+        {
+            column.PropertiesEdit.Style.BackColor = System.Drawing.Color.Lavender;
+            column.CellStyle.BackColor = System.Drawing.Color.Lavender;
+            column.ReadOnly = true;
+        }
+
+    });
+
+
+    settings.Columns.Add(column =>
+    {
+        column.FieldName = "AmountTc";
+        column.Name = "AmountTc";
+        column.Caption = "Amount";
+        column.HeaderStyle.HorizontalAlign = HorizontalAlign.Right;
+        column.Width = 120;
+        column.Settings.AllowSort = DefaultBoolean.False;
+        //column.ReadOnly = true; 
+
+        column.ColumnType = MVCxGridViewColumnType.SpinEdit;
+        var txt = column.PropertiesEdit as SpinEditProperties;
+        txt.NumberType = SpinEditNumberType.Float;
+        txt.DisplayFormatString = "#,###.00";
+        txt.DisplayFormatInEditMode = true;
+        txt.AllowMouseWheel = false;
+
+        txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        txt.Style.HorizontalAlign = HorizontalAlign.Right;
+        txt.ReadOnlyStyle.BackColor = System.Drawing.Color.Lavender;
+
+
+        // txt.ClientSideEvents.ValueChanged = "gvPaymentInCcDetailAmountTcOnValueChanged";
+
+        ASPxSummaryItem summaryItem = new ASPxSummaryItem(column.FieldName, DevExpress.Data.SummaryItemType.Sum);
+        summaryItem.Tag = column.FieldName + "_Sum";
+        summaryItem.DisplayFormat = "{0}";
+        settings.TotalSummary.Add(summaryItem);
+
+        column.SetFooterTemplateContent(c =>
+        {
+            Html.DevExpress().Label(lbSettings =>
+            {
+                string fieldName = (c.Column as GridViewDataColumn).FieldName;
+                lbSettings.Name = "gvPaymentInCcDetailLabel" + fieldName + "Sum";
+                lbSettings.Properties.EnableClientSideAPI = true;
+                ASPxSummaryItem summaryItem1 = c.Grid.TotalSummary.First(i => i.Tag == (fieldName + "_Sum"));
+                lbSettings.Text = decimal.Parse(c.Grid.GetTotalSummaryValue(summaryItem1).ToString()).ToString("#,###.00");
+
+                lbSettings.CustomJSProperties = (sender, e) =>
+                {
+                    e.Properties["cpValue"] = c.Grid.GetTotalSummaryValue(summaryItem1).ToString();
+                };
+
+            }).Render();
+        });
+
+        if (ViewBag.ReadOnly)
+        {
+            column.PropertiesEdit.Style.BackColor = System.Drawing.Color.Lavender;
+            column.CellStyle.BackColor = System.Drawing.Color.Lavender;
+            column.ReadOnly = true;
+        }
+
+    });
+
+
+    settings.CellEditorInitialize = (s, e) =>
+    {
+        ASPxEdit editor = (ASPxEdit)e.Editor;
+        editor.ValidationSettings.Display = Display.Dynamic;
+    };
+
+
+    settings.Settings.ShowFooter = true;
+
+    settings.ClientSideEvents.BatchEditStartEditing = "gvPaymentInCcDetailOnBatchEditStartEditing";
+    settings.ClientSideEvents.BatchEditEndEditing = "gvPaymentInCcDetailOnBatchEditEndEditing";
+    settings.ClientSideEvents.BatchEditRowValidating = "gvPaymentInCcDetailOnBatchEditRowValidating";
+
+
+
+    settings.SettingsPager.Mode = GridViewPagerMode.ShowAllRecords;
+
+
+    //settings.InitNewRow = (sender, e) =>
+    //{
+    //    e.NewValues["MdrType"] = "ExcludeUp";
+    //};
+
+
+}).Bind(Model).GetHtml()

@@ -1,0 +1,104 @@
+﻿ @{
+    string controllerName = "";
+    if (Request["hidden_Code"] != null)
+    {
+        controllerName = Request["hidden_Code"];
+    }
+    else
+    {
+        controllerName = ViewContext.Controller.ValueProvider.GetValue("controller").RawValue.ToString();
+    }
+     
+}
+
+
+@Html.DevExpress().GridView(
+    settings =>
+    {
+        settings.Name = "gvJeViewMaster";
+        settings.CallbackRouteValues = new { Controller = controllerName, Action = "ViewJe_MasterDetailMasterPartial" };
+        //settings.Width = Unit.Percentage(100);
+        //settings.Height = Unit.Percentage(100);
+
+        settings.KeyFieldName = "TransId";
+        settings.Columns.Add("TransId").Visible=false;
+     
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "DocType";
+            column.Name = "DocType";
+            column.Caption = "Doc Type";
+            column.ReadOnly = true;
+
+            //column.Width = 100;
+            column.Settings.AllowSort = DefaultBoolean.False;
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Description";
+            column.Name = "Description";
+            column.Caption = "Description";
+            column.ReadOnly = true;
+
+            //column.Width = 100;
+            column.Settings.AllowSort = DefaultBoolean.False;
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "DocNo";
+            column.Name = "DocNo";
+            column.Caption = "Doc No";
+            column.ReadOnly = true;
+
+            //column.Width = 100;
+            column.Settings.AllowSort = DefaultBoolean.False;
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "JeNo";
+            column.Name = "JeNo";
+            column.Caption = "JE No";
+            column.ReadOnly = true;
+
+            //column.Width = 100;
+            column.Settings.AllowSort = DefaultBoolean.False;
+        });
+
+
+
+        settings.Settings.VerticalScrollBarMode = ScrollBarMode.Visible;
+        settings.Settings.VerticalScrollableHeight = 400;
+
+        //settings.SettingsBehavior.AllowFocusedRow = true;
+        settings.Settings.ShowFilterBar = GridViewStatusBarMode.Hidden;
+        
+        settings.SettingsDetail.AllowOnlyOneMasterRowExpanded = false;
+        settings.SettingsDetail.ShowDetailRow = true; 
+
+        settings.SetDetailRowTemplateContent(c => {
+            //ViewContext.Writer.Write(
+            //   "Mantap"
+            //);
+
+            var details = (Models._ViewJe.ViewJeMasterModel)Model[c.ItemIndex];
+            Html.RenderPartial("~/Views/_ViewJe/_ViewJe/Partial/_ViewJeGvDetailPartial.cshtml", details);
+        });
+        settings.PreRender = (sender, e) => {
+            //((MVCxGridView)sender).DetailRows.ExpandRow(0);
+            ((MVCxGridView)sender).DetailRows.ExpandAllRows();
+        };
+
+
+        settings.SettingsPager.Mode = GridViewPagerMode.ShowAllRecords;
+
+        settings.CustomJSProperties = (sender, e) =>
+        {
+            e.Properties["cpCode"] = controllerName;
+        };
+        
+        settings.ClientSideEvents.BeginCallback = string.Format("function(s, e) {{ e.customArgs['hidden_Code']=s.cpCode;  e.customArgs['hidden_Id']=Id.GetValue(); }}");
+        
+    }).Bind(Model).GetHtml()

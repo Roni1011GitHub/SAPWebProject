@@ -1,0 +1,81 @@
+﻿@{
+    string controllerName = "";
+    if (Request["hidden_Code"] != null)
+    {
+        controllerName = Request["hidden_Code"];
+    }
+    else
+    {
+        controllerName = ViewContext.Controller.ValueProvider.GetValue("controller").RawValue.ToString();
+    }
+
+    
+    
+}
+
+@Html.DevExpress().PopupControl(settings =>
+{
+    settings.Name = "pcViewJe";
+    settings.CallbackRouteValues = new { Controller = controllerName, Action = "ViewJe_PopupListLoadOnDemandPartial" };
+    settings.CloseAction = CloseAction.OuterMouseClick;
+    settings.PopupVerticalAlign = PopupVerticalAlign.Below;
+    settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+
+
+    settings.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
+
+    settings.CloseAnimationType = AnimationType.Fade;
+    settings.PopupAnimationType = AnimationType.Fade;
+
+    //settings.Width = 300;
+    //settings.Height = 300;
+
+    settings.ShowFooter = true;
+    settings.AllowDragging = true;
+    settings.AllowResize = true;
+    settings.ShowCollapseButton = true;
+    settings.ShowMaximizeButton = true;
+    settings.ShowRefreshButton = true;
+    settings.FooterText = "";
+    settings.Styles.Footer.Paddings.Padding = 0;
+
+
+
+
+    settings.LoadContentViaCallback = LoadContentViaCallback.OnFirstShow;
+    settings.PopupElementID = "ShowButton";
+    settings.HeaderText = "View JE";
+
+    settings.ScrollBars = ScrollBars.Auto;
+    settings.SetContent(() =>
+    {
+        Html.DevExpress().HyperLink(settingsChoose =>
+        {
+            settingsChoose.Name = "pcViewJeCancel";
+            settingsChoose.NavigateUrl = "javascript:void(0)";
+            settingsChoose.Properties.Text = "Cancel";
+            settingsChoose.Height = 20;
+            settingsChoose.Properties.ClientSideEvents.Click = "function(s, e) { pcViewJe.Hide(); }";
+        }).GetHtml(); 
+        
+        Html.RenderPartial("~/Views/_ViewJe/_ViewJe/Partial/_ViewJeGvMasterPartial.cshtml");
+    });
+
+    settings.PreRender = (sender, e) =>
+    {
+        ASPxPopupControl popup = (ASPxPopupControl)sender;
+        popup.Width = 1000;
+        popup.Height = 500;
+    };
+
+    settings.CustomJSProperties = (sender, e) =>
+    {
+        e.Properties["cpCode"] = controllerName;
+        e.Properties["cpId"] = Request["hidden_Id"];
+    };
+
+    settings.ClientSideEvents.BeginCallback = string.Format("function(s, e) {{ e.customArgs['hidden_Code']=s.cpCode;  e.customArgs['hidden_Id']=Id.GetValue(); }}");
+    settings.ClientSideEvents.Resize = string.Format("function(s, e) {{ GridviewInPopupAdjustSize(pcViewJe,gvJeViewMaster); }}", "");
+    settings.ClientSideEvents.EndCallback = string.Format("function(s, e) {{ GridviewInPopupAdjustSize(pcViewJe,gvJeViewMaster); }}", "");
+
+}).GetHtml()

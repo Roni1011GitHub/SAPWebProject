@@ -1,0 +1,233 @@
+﻿@model Models._ViewJe.ViewJeMasterModel 
+ 
+@{
+    
+    System.Data.DataTable dtDim = ViewBag.DtDim;
+    
+}
+@Html.DevExpress().GridView(
+    settings =>
+    {
+        settings.Name = "gvJeViewDetail" + Guid.NewGuid().ToString() ;// Model.TransId.ToString();
+        settings.SettingsDetail.MasterGridName = "gvJeViewMaster";
+        //settings.CallbackRouteValues = new { Controller = "_ViewJe", Action = "MasterDetailDetailPartial", CustomerID = ViewData["CustomerID"] };
+        settings.Width = Unit.Percentage(100);
+
+        settings.KeyFieldName = "LineId";
+        settings.Columns.Add("LineId").Visible = false;
+       
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "AccountCode";
+            column.Name = "AccountCode";
+            column.Caption = "Account Code";
+            column.ReadOnly = true;
+
+            column.Width = 100;
+            column.Settings.AllowSort = DefaultBoolean.False;
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "AccountName";
+            column.Name = "AccountName";
+            column.Caption = "Account Name";
+            column.ReadOnly = true;
+
+            column.Width = 350;
+            column.Settings.AllowSort = DefaultBoolean.False;
+        });
+
+        if (Model.IsMultiCur == "Y")
+        {
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "CurCode";
+                column.Name = "CurCode";
+                column.Caption = "Currency";
+                column.ReadOnly = true;
+
+                column.Width = 70;
+                column.Settings.AllowSort = DefaultBoolean.False;
+            });
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "DebitTc";
+                column.Name = "DebitTc";
+                column.Caption = "Debit";
+                column.ReadOnly = true;
+                column.HeaderStyle.HorizontalAlign = HorizontalAlign.Right;
+
+                column.ColumnType = MVCxGridViewColumnType.SpinEdit;
+                column.Width = 100;
+                column.Settings.AllowSort = DefaultBoolean.False;
+
+                var txt = column.PropertiesEdit as SpinEditProperties;
+                txt.NumberType = SpinEditNumberType.Float;
+                txt.DisplayFormatString = "#,###.00";
+                txt.DisplayFormatInEditMode = true;
+                txt.AllowMouseWheel = false;
+
+                txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+                txt.Style.HorizontalAlign = HorizontalAlign.Right;
+
+            });
+
+            settings.Columns.Add(column =>
+            {
+                column.FieldName = "CreditTc";
+                column.Name = "CreditTc";
+                column.Caption = "Credit";
+                column.ReadOnly = true;
+                column.HeaderStyle.HorizontalAlign = HorizontalAlign.Right;
+
+                column.ColumnType = MVCxGridViewColumnType.SpinEdit;
+                column.Width = 100;
+                column.Settings.AllowSort = DefaultBoolean.False;
+
+                var txt = column.PropertiesEdit as SpinEditProperties;
+                txt.NumberType = SpinEditNumberType.Float;
+                txt.DisplayFormatString = "#,###.00";
+                txt.DisplayFormatInEditMode = true;
+                txt.AllowMouseWheel = false;
+
+                txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+                txt.Style.HorizontalAlign = HorizontalAlign.Right;
+
+            });
+        }
+        
+        
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "DebitLc";
+            column.Name = "DebitLc";
+            column.Caption = "Debit (IDR)";
+            column.ReadOnly = true;
+            column.HeaderStyle.HorizontalAlign = HorizontalAlign.Right;
+
+            column.ColumnType = MVCxGridViewColumnType.SpinEdit;
+            column.Width = 100;
+            column.Settings.AllowSort = DefaultBoolean.False;
+            
+            var txt = column.PropertiesEdit as SpinEditProperties;
+            txt.NumberType = SpinEditNumberType.Float;
+            txt.DisplayFormatString = "#,###.00";
+            txt.DisplayFormatInEditMode = true;
+            txt.AllowMouseWheel = false;
+
+            txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+            txt.Style.HorizontalAlign = HorizontalAlign.Right;
+            
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "CreditLc";
+            column.Name = "CreditLc";
+            column.Caption = "Credit (IDR)";
+            column.ReadOnly = true;
+            column.HeaderStyle.HorizontalAlign = HorizontalAlign.Right;
+
+            column.ColumnType = MVCxGridViewColumnType.SpinEdit;
+            column.Width = 100;
+            column.Settings.AllowSort = DefaultBoolean.False;
+
+            var txt = column.PropertiesEdit as SpinEditProperties;
+            txt.NumberType = SpinEditNumberType.Float;
+            txt.DisplayFormatString = "#,###.00";
+            txt.DisplayFormatInEditMode = true;
+            txt.AllowMouseWheel = false;
+
+            txt.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+            txt.Style.HorizontalAlign = HorizontalAlign.Right;
+
+        });
+
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "Project";
+            column.Name = "Project";
+            column.Caption = "Project";
+            column.ReadOnly = true;
+
+            column.Width = 80;
+            column.Settings.AllowSort = DefaultBoolean.False;
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "CostCenter1";
+            column.Name = "CostCenter1";
+            column.Caption = dtDim.Rows[0]["DimDesc"].ToString();
+            column.ReadOnly = true;
+
+            column.Width = 80;
+            column.Settings.AllowSort = DefaultBoolean.False;
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "CostCenter2";
+            column.Name = "CostCenter2";
+            column.Caption = dtDim.Rows[1]["DimDesc"].ToString();
+            column.ReadOnly = true;
+
+            column.Width = 80;
+            column.Settings.AllowSort = DefaultBoolean.False;
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "CostCenter3";
+            column.Name = "CostCenter3";
+            column.Caption = dtDim.Rows[2]["DimDesc"].ToString();
+            column.ReadOnly = true;
+
+            column.Width = 80;
+            column.Settings.AllowSort = DefaultBoolean.False;
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "CostCenter4";
+            column.Name = "CostCenter4";
+            column.Caption = dtDim.Rows[3]["DimDesc"].ToString();
+            column.ReadOnly = true;
+
+            column.Width = 80;
+            column.Settings.AllowSort = DefaultBoolean.False;
+        });
+
+        settings.Columns.Add(column =>
+        {
+            column.FieldName = "CostCenter5";
+            column.Name = "CostCenter5";
+            column.Caption = dtDim.Rows[4]["DimDesc"].ToString();
+            column.ReadOnly = true;
+
+            column.Width = 80;
+            column.Settings.AllowSort = DefaultBoolean.False;
+        });
+
+
+
+        settings.Settings.ShowFooter = true;
+        
+        if (Model.IsMultiCur == "Y")
+        {
+            settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "DebitTc").DisplayFormat = "#,###.00";
+            settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "CreditTc").DisplayFormat = "#,###.00";
+        }
+        
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "DebitLc").DisplayFormat = "#,###.00";
+        settings.TotalSummary.Add(DevExpress.Data.SummaryItemType.Sum, "CreditLc").DisplayFormat = "#,###.00";
+        
+        
+       settings.SettingsPager.Mode = GridViewPagerMode.ShowAllRecords;
+
+     
+        
+    }).Bind(Model.Details_).GetHtml()

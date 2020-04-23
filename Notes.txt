@@ -1,0 +1,110 @@
+﻿ 1) 
+ tambahkan script ke file PetaPoco.Generator di class  public class Record<T> where T:new() .
+ ini digunakan untuk saat generate akan membuat script yg kita inginkan.
+ tujuan penambahan script ini adalah untuk mendapatkn column2 yg mengalamiperubahan selapa "update" property
+ script :
+
+ //idu
+public Dictionary<string,bool> getModifiedColumns() {
+    return ModifiedColumns;
+}
+
+
+2) 
+jika membuat beberapa tab tapi seperti ada jeda spasi/(br) , tambahkan spasi 1 di caption
+
+
+2016-03-30
+----------
+menambahkan dbApp_Name dan dbSap_Name di DbProvider
+
+
+Control disable= #E0E0E0
+Control select=#FF8800
+Control bb =#116959
+yellow header : #dccb3f
+
+
+
+to do list:
+-----------------
+* layout dibuat controlernya dimasing2 form ajah biar securitynya gampang
+
+
+
+-- 1. partial button
+-- 2. 100% di form
+-- 3. format header form 
+-- 4. button dibawah header
+-- 5. btn update di hilangkan ketika mode add; btn add di hilangkan ketika update
+
+
+Dynamic validation :
+//$('input[name="Bcds[1].ParamValue"]').rules('add', { required: true, messages: { required: 'test required' } });
+
+
+//$('#Bcds\\[1\\]\\.ParamValue_I').rules('add', { required: true, messages: { required: 'test required' } });
+
+//$('input[id$="].ParamValue_I"]').each(function () {
+//    $(this).rules('add', { required: true, messages: { required: 'required' } });
+//});
+
+$('input[id^="Bcds["][id$="].ParamValue_I"]').each(function () {
+    alert('test01');
+});
+
+
+--------------------------------------------
+hanya bisa di pakai ketika nama node sudah di define 
+  node.TreeView.Nodes.Remove(node);
+
+
+
+
+ ------------------------------
+ Jika upload tidak bisa kedetect di helper karena :
+
+ di controler 
+ public ActionResult CallbacksUpload(IEnumerable<UploadedFile> Files)
+
+ parameter name "Files" : harus sama dengan name di inputan
+
+ ------------------------------
+
+
+
+ ------------------------------
+ -- jika suatu form find list tidak bisa ke filter karena :
+ name gridnya :
+  settings.Name ="gvTicketRequestList"; 
+  tidak sama dengan apa yg tertulist di controler :
+    var viewModel = GridViewExtension.GetViewModel("gvTicketReservationList");
+
+ ------------------------------
+
+
+ 
+ // bisa di gunakan untuk update grid dengan triger atau isian dari luar grid
+var rows = gv.batchEditHelper.GetEditState().insertedRowValues;
+           
+for (var key in rows) {
+    gv.batchEditApi.StartEdit(key);
+
+    var temp1 = gv.GetEditValue('SellingFarePerNightTc') * (TotalNight.GetValue() * gv.GetEditValue('NoOfRooms'));
+    gvHotelVoucherRoomDetail_SellingPriceTc.SetValue(temp1);
+
+    var temp2 = gv.GetEditValue('CostFarePerNightTc') * (TotalNight.GetValue() * gv.GetEditValue('NoOfRooms'));
+    gvHotelVoucherRoomDetail_NetPriceTc.SetValue(temp2);
+
+}
+
+
+//---------------------------
+//grpApDpType : harus di letakan di paling atas
+itemSettings.Name = "grpApDpType";
+itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.ComboBox;
+itemSettings.FieldName = "ApDpType";
+itemSettings.Caption = "DP Type";
+
+
+ 

@@ -1,0 +1,73 @@
+﻿
+@{ 
+     
+    string controllerName = "";
+    if (Request["hidden_FormCode"] != null)
+    {
+        controllerName = Request["hidden_FormCode"];
+    }
+    else
+    {
+        controllerName = ViewContext.Controller.ValueProvider.GetValue("controller").RawValue.ToString();
+    }
+
+      
+}
+ 
+
+@Html.DevExpress().PopupControl(settings =>
+{
+    settings.Name = "popupLoginApproval";
+    settings.CallbackRouteValues = new { Controller = "_LoginApproval", Action = "PopupLoadOnDemandPartial" };
+    settings.CloseAction = CloseAction.CloseButton;
+    settings.Modal = true;
+
+    settings.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
+    settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+
+    //settings.Opacity = 70;
+    //settings.ControlStyle.BackColor = System.Drawing.Color.Transparent;
+
+    settings.ShowFooter = false;
+    settings.AllowDragging = true;
+    settings.AllowResize = false;
+    settings.ShowCollapseButton = false;
+    settings.ShowMaximizeButton = false;
+    settings.ShowRefreshButton = true;
+    settings.ShowCloseButton = true;
+    settings.FooterText = "";
+    settings.Styles.Footer.Paddings.Padding = 0;
+
+    settings.ShowPageScrollbarWhenModal = true;
+
+    settings.EnableHotTrack = true;
+    settings.Width = System.Web.UI.WebControls.Unit.Pixel(300);
+    settings.Height = System.Web.UI.WebControls.Unit.Pixel(150);
+
+    settings.LoadContentViaCallback = LoadContentViaCallback.None;
+    settings.PopupElementID = "ShowButton";
+    settings.HeaderText = "Approval";
+    //settings.SaveStateToCookies = true;
+    //settings.SaveStateToCookiesID = "CookiesPopupLoginApproval";
+
+    
+    
+    settings.ClientSideEvents.EndCallback = "function(s, e) { LoginApproval_UserName.Focus(); }";
+    settings.SetContent(() =>
+    {
+        //Html.RenderPartial("Partial/LoginApproval_Form_Partial");
+        var model = new Models._LoginApproval.LoginApprovalModel();
+        model.LoginApproval_FormCode = controllerName;
+        Html.RenderPartial("~/Views/_LoginApproval/_LoginApproval/Partial/LoginApproval_Form_Partial.cshtml", model);
+        
+    });
+
+    settings.CustomJSProperties = (sender, e) =>
+    {
+        e.Properties["cpFormCode"] = controllerName; 
+    };
+
+    settings.ClientSideEvents.BeginCallback = string.Format("function(s, e) {{ e.customArgs['hidden_FormCode']=s.cpFormCode; }}");
+   
+    
+}).GetHtml()

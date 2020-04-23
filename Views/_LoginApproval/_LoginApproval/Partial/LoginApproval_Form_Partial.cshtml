@@ -1,0 +1,164 @@
+﻿@model Models._LoginApproval.LoginApprovalModel   
+
+@{ 
+     
+    string controllerName = "";
+    if (Request["hidden_FormCode"] != null)
+    {
+        controllerName = Request["hidden_FormCode"];
+    }
+    else
+    {
+        controllerName = ViewContext.Controller.ValueProvider.GetValue("controller").RawValue.ToString();
+    }
+
+      
+}
+ 
+  
+@Html.DevExpress().TextBox(
+        settings =>
+        {
+            settings.Name = "LoginApproval_FormCode";
+            settings.ControlStyle.CssClass = "editor";
+            settings.ShowModelErrors = true;
+            settings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+            settings.ClientVisible = false;
+            //settings.Text = controllerName;
+        }
+).Bind(Model.LoginApproval_FormCode).GetHtml()
+
+ @Html.DevExpress().FormLayout(settings => {
+    settings.Name = "LoginApproval_formLayout";
+    settings.EncodeHtml = false;
+    settings.Width = Unit.Percentage(100);
+    settings.AlignItemCaptionsInAllGroups = true; 
+    settings.ShowItemCaptionColon = false;
+    
+    
+    var groupItem = settings.Items.AddGroupItem(itemSettings =>
+    {
+        itemSettings.Caption = "Approval";
+        
+        itemSettings.GroupBoxDecoration = GroupBoxDecoration.None; 
+        itemSettings.ShowCaption = DefaultBoolean.False;
+        
+    }); 
+
+ 
+
+    var groupItem_2 = groupItem.Items.AddGroupItem(itemSettings =>
+    {
+        itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
+        itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
+        itemSettings.ShowCaption = DefaultBoolean.False;
+        itemSettings.ColCount = 1; 
+    });
+
+    var groupItem_Col1 = groupItem_2.Items.AddGroupItem(itemSettings =>
+    {
+        itemSettings.SettingsItemHelpTexts.Position = HelpTextPosition.Bottom;
+        itemSettings.GroupBoxDecoration = GroupBoxDecoration.None;
+        itemSettings.ShowCaption = DefaultBoolean.False;
+        itemSettings.ColCount = 1; 
+
+    });
+
+
+    groupItem_Col1.Items.Add(itemSettings =>
+    {
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.Label ;
+        itemSettings.Caption = " ";
+        itemSettings.ShowCaption = DefaultBoolean.False;
+        var txt = (LabelSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "LoginApproval_Info"; 
+        txt.ControlStyle.CssClass = "editor";
+        txt.Text = "Invoice melebihi credit limit";
+        
+        var style = new System.Web.UI.WebControls.Style();
+        style.Font.Bold = true;
+        style.Font.Size = 14;
+
+        txt.ControlStyle.CopyFontFrom(style);
+    });
+    
+
+    groupItem_Col1.Items.Add(itemSettings =>
+    {
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
+        itemSettings.Caption = "UserName";
+        itemSettings.FieldName = "LoginApproval_UserName";
+        //itemSettings.CaptionStyle.ForeColor = System.Drawing.Color.White;
+        //itemSettings.CaptionStyle.BackColor = System.Drawing.Color.DodgerBlue;
+        var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "LoginApproval_UserName"; 
+        txt.ShowModelErrors = true;
+        txt.ControlStyle.CssClass = "editor";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+
+
+        //txt.Properties.ClientSideEvents.KeyPress = "LoginApproval_UserNameOnKeyPress";
+    });
+    
+
+    groupItem_Col1.Items.Add(itemSettings =>
+    {
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
+        itemSettings.Caption = "Password";
+        itemSettings.FieldName = "LoginApproval_Pwd";
+        //itemSettings.CaptionStyle.ForeColor = System.Drawing.Color.White;
+        //itemSettings.CaptionStyle.BackColor = System.Drawing.Color.DodgerBlue;
+        var txt = (TextBoxSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "LoginApproval_Pwd";
+        txt.ShowModelErrors = true;
+        txt.Properties.Password = true;
+        txt.ControlStyle.CssClass = "editor";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+
+        //txt.Properties.ClientSideEvents.KeyPress = "LoginApproval_PwdOnKeyPress";
+    });
+
+    groupItem_Col1.Items.Add(itemSettings =>
+    {
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.Memo;
+        itemSettings.Caption = "Notes";
+        itemSettings.FieldName = "LoginApproval_Notes";
+        itemSettings.Width = 400;
+
+        var txt = (MemoSettings)itemSettings.NestedExtensionSettings;
+        txt.Name = "LoginApproval_Notes";
+        //txt.ReadOnly = true;// (Model.FormMode == Models.FormModeEnum.New) ? false : true;
+        txt.ShowModelErrors = true;
+        txt.ControlStyle.CssClass = "editor";
+        txt.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.ImageWithTooltip;
+        txt.Properties.ReadOnlyStyle.BackColor = System.Drawing.Color.Lavender;
+        txt.Width = 200;
+        txt.Height = 50;
+    });
+
+
+    groupItem_Col1.Items.Add(itemSettings =>
+    {
+        itemSettings.NestedExtensionType = FormLayoutNestedExtensionItemType.Button; 
+
+        var btnSettings = (ButtonSettings)itemSettings.NestedExtensionSettings;
+        btnSettings.Name = "btnLoginApproval";
+        btnSettings.Text = "Approval";
+        btnSettings.Width = 20;
+        btnSettings.ClientSideEvents.Click = "function(s,e) {{ OnClickBtnLoginApproval(s,e); }}";
+     
+        //btnSettings.ImagePosition = ImagePosition.Left;
+        //btnSettings.Images.Image.Url = "~/Content/Images/button/b_add.png";
+        ////btnSettings.Images.Image.Height = 20;
+        ////btnSettings.Styles.Style.ImageSpacing = 1;
+        btnSettings.Styles.Style.Paddings.Padding = 0;
+
+    }); 
+
+    
+    
+}).GetHtml()
+   
+ 
+ 
+ 

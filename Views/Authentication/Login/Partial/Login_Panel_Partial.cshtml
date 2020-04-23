@@ -1,0 +1,42 @@
+﻿@Html.DevExpress().PopupControl(settings =>
+{
+    settings.Name = "popupLogin";
+    settings.CallbackRouteValues = new { Controller = "Login", Action = "PopupLoadOnDemandPartial" };
+    settings.CloseAction = CloseAction.None;
+    
+    //settings.PopupVerticalAlign = PopupVerticalAlign.WindowCenter;
+    //settings.PopupHorizontalAlign = PopupHorizontalAlign.WindowCenter;
+
+    settings.Opacity = 70;
+    //settings.ControlStyle.BackColor = System.Drawing.Color.Transparent;
+
+    settings.ShowFooter = false;
+    settings.AllowDragging = true;
+    settings.AllowResize = false;
+    settings.ShowCollapseButton = false;
+    settings.ShowMaximizeButton = false;
+    settings.ShowRefreshButton = true;
+    settings.ShowCloseButton = false;
+    settings.FooterText = "";
+    settings.Styles.Footer.Paddings.Padding = 0;
+    
+    settings.ShowPageScrollbarWhenModal = true;
+
+    settings.EnableHotTrack = true;
+    settings.Width = System.Web.UI.WebControls.Unit.Pixel(300);
+    settings.Height = System.Web.UI.WebControls.Unit.Pixel(150);
+    
+    settings.LoadContentViaCallback = LoadContentViaCallback.None;
+    settings.PopupElementID = "ShowButton";
+    settings.HeaderText = "Login";
+    settings.SaveStateToCookies = true;
+    settings.SaveStateToCookiesID = "CookiesPopupLogin";
+   
+    settings.ClientSideEvents.EndCallback = "function(s, e) { UserName.Focus(); }";
+    settings.SetContent(() =>
+    {
+        Html.RenderPartial("Partial/Login_Form_Partial");
+        
+    }); 
+    
+}).GetHtml()
